@@ -1,0 +1,9 @@
+/*Propósito de la tabla: Contiene los distintos tipos de documentos existentes en nuestro sistema de gestión de calidad, basado en ISO 9001*/
+
+CREATE TABLE `erp_calidad_tipos_documentos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Nro. tipo de documento', --el ID único del tipo de documento
+  `nombre` varchar(45) DEFAULT NULL COMMENT 'Nombre',--nombre del tipo de documento
+  `ultimo_doc` int(11) DEFAULT 0 COMMENT 'Contador para el ID del último documento dado de alta',--se desconoce su uso
+  `orden` int(11) DEFAULT 0 COMMENT 'Orden',--dentro del sistema de gestión de calidad, los documentos tienen una jerarquía, este campo indica la posición jerárquica del documento, siendo 1 el valor más alto en la jerarquía. 0 indica que no está definida la jerarquía del documento
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

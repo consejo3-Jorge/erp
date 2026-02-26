@@ -1,0 +1,18 @@
+/*Propósito de la tabla: contiene los registros asociados a las sesiones de matrícula para las sesiones presenciales especiales.
+En realidad todo el sistema de sesiones presenciales especiales es una especie de bolsa de horas que se asigna al alumno, para que luego el alumno vaya haciendo uso de esas horas.
+Esta tabla controla el total de horas en la bolsa de la matrícula, las horas ya usadas y por lo tanto las horas sin usar (horas totales-horas usadas).
+Además se registra en qué clases ya usado las horas el alumno
+*/
+
+CREATE TABLE `erp_sesiones_esp_detalle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--contiene el id único que identifica el registro
+  `idmaster` int(11) DEFAULT 0,--contiene el id de la sesión presencial especial a la que pertenece este registro. Se asocia con el campo erp_sesiones_especiales_master.id
+  `alumno` int(11) DEFAULT 0,--contiene el ID del alumno. Se relaciona con el campo del Moodle mdl_users.id
+  `matid` int(11) DEFAULT 0,--contiene el ID de la matrícula asociada, se relaciona con el campo matriculas.matid
+  `horas` decimal(10,2) DEFAULT 0.00,--indica el total de horas asignadas a este detalle de sesión especial.
+  `horas_sin_asig` decimal(10,2) DEFAULT 0.00,--indica el total de horas pendientes de usar. Según vaya el alumno haciendo uso de la bolsa de tiempo, se irán restando de aquí
+  `clase` varchar(255) DEFAULT NULL,--indica, separadas por coma (,) el ID de las clases en las que ha invertido las horas el alumno. Se relaciona con el campo erp_sesiones_clases.id
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6452 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

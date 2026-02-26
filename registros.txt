@@ -1,0 +1,36 @@
+/*Propósito de la tabla: contiene todos los registros de clientes potenciales y otras bases de datos para explotar comercialmente*/
+
+
+CREATE TABLE `registros` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,--id único del registro
+  `emp` varchar(255) DEFAULT NULL,--nombre de la empresa o cliente potencial
+  `email` varchar(255) DEFAULT NULL,--email de la empresa o cliente potencial
+  `tfno` varchar(255) DEFAULT NULL,--teléfono de la empresa o cliente potencial
+  `fax` varchar(255) DEFAULT NULL,--fax de la empresa o cliente potencial
+  `contacto` varchar(255) DEFAULT NULL,--persona de contacto de la empresa o cliente potencial
+  `contacto_del` varchar(255) DEFAULT NULL,--segunda personal de contacto "delegada" de la empresa o cliente potencial
+  `tfno_del` varchar(255) DEFAULT NULL,---teléfono de la segunda persona de contacto
+  `email_del` varchar(50) DEFAULT NULL,--email de la persona segunda de contacto
+  `cargo` varchar(255) DEFAULT NULL,--cargo de la persona de contacto
+  `dir` varchar(255) DEFAULT NULL,--dirección de la empresa o cliente potencial
+  `cp` varchar(255) DEFAULT NULL,--código postal de la empresa o cliente potencial
+  `pob` varchar(255) DEFAULT NULL, --población de la empresa o cliente potencial
+  `prov` varchar(255) DEFAULT NULL,--provincia de la empresa o cliente potencial
+  `rechazos` smallint(6) DEFAULT 0,--SE DESCONOCE EL USO DE ESTE CAMPO
+  `consume_formacion` smallint(6) DEFAULT 0,--indica si la empresa o cliente potencial son consumidores habituales de servicios de formación
+  `robinson` int(11) NOT NULL DEFAULT 0,--indica si la empresa o cliente potencial se declara róbinson, es decir, que no quiere que se le contacte
+  `nro_trabajadores` smallint(6) DEFAULT 0,--si se sabe, indica el númerod de empleados de la empresa o cliente potencial
+  `volumen_negocio` decimal(10,2) DEFAULT 0.00, -- si se sabe indica el volúmen de negocio que nos puede traer de la empresa o cliente potencial
+  `notas` text DEFAULT NULL,--notas aclaratorias del registro
+  `usuario` int(11) DEFAULT 0,--usuario al que se le asigna este registro para usar en el servico te telemaketing. Se relaciona con la tabla USERS (USERS.userid)
+  `proxima` int(11) DEFAULT 0,--fecha en formato unix_timestamp en la que se ha quedado en volver a contactar con el personal de la empresa o cliente potencial
+  `actuaciones` int(11) DEFAULT 0, --número de actuaciones que se ha realizado con este registro en el servicio de telemarketing
+  `pasado_a_cliente` int(11) DEFAULT 0, --indica si este regisdtro se ha pasado a cliente usando el servicio de telermarketing
+  `datos_erroneos` smallint(6) DEFAULT 0,--indica si se ha marcado este registro como -datos erróneos- usando el servicio de telemarketing
+  `situacion` smallint(6) DEFAULT 0, --probablemente indica la disposición del cliente a comprar (0=no hay datos, 1=frio, 2=templado, 3=caliente, 4=esperando documentación pedido)
+  PRIMARY KEY (`id`),
+  KEY `IX_registros_email` (`email`),
+  KEY `IDX_registros_email_del` (`email_del`),
+  KEY `IDX_registros_tfno` (`tfno`),
+  KEY `IDX_registros_tfno_del` (`tfno_del`)
+) ENGINE=InnoDB AUTO_INCREMENT=490129 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

@@ -1,0 +1,25 @@
+/*Propósito de la tabla: contiene un log de las aciones realizadas por los comerciales sobre los prospectos de la herramienta de telemarketing*/
+
+CREATE TABLE `erp_telemarketing_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, -- contiene un ID único de la acción realizada por el comercial sobre el contacto del prospecto
+  `registroid` int(11) DEFAULT 0, --contiene el ID del registro de la base de datos de prospectos se relaciona con XXXXXXXXXXXX
+  `userid` int(11) DEFAULT 0,--contiene el registros del usuario que ha realizado la acción, se relaciona con la tabla USERS (USERS.userid)
+  `campaniaid` int(11) DEFAULT 0, --contiene el ID de la acción o campaña de marketing, se relaciona con la tabla campanias (CAMPANIAS.id)
+  `fecha` int(11) DEFAULT 0, -- contiene la fecha de la acción realizada por el comercial en formato unix_timestamp
+  `accion` varchar(255) DEFAULT NULL, contiene la acción realizada, que puede ser una de estas 8: siguiente,descartar,erroneo,cli,cupon,robinson,posponer,info
+  `txt` text DEFAULT NULL,--contiene información en prosa que detalla la acción realizada por el cliente
+  `datos` text DEFAULT NULL,--contiene un detalle exacto de la acción realizada en formato PHP Serialized Array
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16301 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+
+Nota aclaratoria sobre el campo -accion-, y los posibles valores, se indica que significa cada uno:
+
+siguiente: el comercial ha pulsado sobre el botón -siguiente- para que el sistema le muestre el siguiente registro
+descartar: el comercial ha pulsado sobre el botón -descartar- para que esa ficha no le vuelva a salir al menos hasta dentro de 365 días
+erroneo: el comercial ha pulsado sobre el botón -datos erróneos- para indicar que los datos de ese registro no son correctos, el registro no se tendrá en cuenta nunca más
+cli: el comercial ha pulsado sobre el botón -pasar a cliente- de forma que este prospecto pasa automáticamente a la base de datos de clientes.
+cupon: el comercial ha pulsado sobre el botón -pasar a cupón- para que se cree un cupón u oportunidad de venta en la base de datos de cupones
+robinson: el comercial ha pulsado sobre el botón -pasar a róbinson- para no volver a hacer acciones comerciales nunca más con el cliente
+posponer: el comercial ha pulsado sobre -posponer- para llamar al cliente en otro momento.
+info: no esá muy clara la función pero lo más probable es que simplemente se ha metido nueva información en el registro por parte del comercial

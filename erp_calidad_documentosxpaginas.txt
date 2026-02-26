@@ -1,0 +1,8 @@
+/*Propósito de la tabla: Sirve para relacionar pantallas del ERP de gestión de la empresa con documentos del sistema de calidad. Un documento del sistema de calidad puede estar vinculado ninguna, una o más pantallas. La finalidad de relacionar documentos y pantallas, es tener ayuda contextual para los usuarios del ERP de la empresa y que puedan visualizar los documentos que pueden ayudarles en cada pantalla del aplicativo*/
+
+CREATE TABLE `erp_calidad_documentosxpaginas` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,--id único de la relación de documento y pantalla
+  `documento` int(11) DEFAULT NULL,--id del documento, se relaciona con la tabla erp_calidad_documentos.id
+  `pagina` int(11) DEFAULT NULL,--id de la pantalla o página del aplicativo, se relaciona con el campo w_paginas.id
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=977 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

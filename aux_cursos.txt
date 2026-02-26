@@ -1,0 +1,90 @@
+/*Propósito de la tabla: Contiene los datos de los cursos de los que dispone el centro. Esta es la tabla principal de cursos*/
+
+CREATE TABLE `aux_cursos` (
+  `cursoid` int(10) unsigned NOT NULL DEFAULT 0,--id único del curso, corresponde además con el ID del curso en Moodle (mdl_course.id)
+  `horas` int(10) unsigned DEFAULT 0,--campo en desuso
+  `proveid` int(10) unsigned DEFAULT 0,--id del proveedor del curso, se relaciona con la tabla proves.proveid
+  `descrip` varchar(256) DEFAULT NULL,--nombre del curso
+  `info` text DEFAULT NULL,--Información introductoria del curso que se muestra en el campus Moodle como vista preliminar del curso
+  `link` varchar(250) DEFAULT NULL,--dirección dentro de nuestro servidor en la que está la ficha en PDF del curso. En realidad la ficha del curso es el cursoid+".PDF", ejemplo de contenido del campo: /usr/home/visionyvalor/www/recursos/admin/documentos/temarios/4999.pdf
+  `dirigido` text DEFAULT NULL,--texto en formato HTML que indica a qué tipo de personas está dirigido este curso. Se guarda en formato HTML
+  `objetivo` text DEFAULT NULL,--texto que indica los objetivos del curso. Se guarda en formato HTML
+  `aplicacion_practica` text DEFAULT NULL,--texto que indica cuál sería la aplicación práctica de lo aprendido con este curso. Se guarda en formato HTML
+  `pvp_plus` decimal(10,2) DEFAULT 0.00,--en desuso
+  `pvp_premium` decimal(10,2) DEFAULT 0.00,--en desuso
+  `pvp_manuales` decimal(10,2) DEFAULT 0.00,--en desuso
+  `cid` int(10) unsigned NOT NULL AUTO_INCREMENT,--se desconoce su uso
+  `shortname` varchar(100) DEFAULT NULL,--nombre corte del curso, debe coincidir con la tabla y campo de Moodle mdl_course.shortname
+  `idnumber` varchar(100) DEFAULT NULL,--se desconoce su uso
+  `tutor_defecto` int(11) DEFAULT 0,--se desconoce su uso
+  `temario` longtext DEFAULT NULL,--contiene el índice del temario del curso en formato HTML
+  `temario_limpiado` int(11) DEFAULT 0,--contiene el índice del temario del curso en formato texto plato
+  `tutor` int(10) unsigned NOT NULL DEFAULT 0,--indica cual es el ID del tutor del curso, se corresponde con la campo users.user_mdl y también en Moodle con mdl_user.id
+  `del` int(10) unsigned NOT NULL DEFAULT 0,--se desconoce su uso
+  `tipo` int(10) unsigned NOT NULL DEFAULT 0,--puede contener uno de estos 5 valores: 0,1,2,3,4 (0=pendiente de determinar, 1=elearning, 2=semi presencial, 3=distancia, 4=presencial/tele-presencial, 5
+  `proyecto_disponible` int(10) unsigned NOT NULL DEFAULT 0,--indica el id del recurso de Moodle que corresponde con lo que está previsto sea el examen final del curso. Aún no se ha averiguado con qué campo y tabla de Moodle se corresponde. Un valor 0 indica que no hay proyecto fin de curso disponible
+  `proyecto_tipo` varchar(40) DEFAULT NULL,--indica en modo texto, el tipo de proyecto que es y corresponde con un recurso de Moodle. Los posibles valores son: quiz,assign,scorm_scoes,url
+  `solicitado_proyecto_tutor` int(10) unsigned NOT NULL DEFAULT 0,--se desconoce su uso
+  `contenidos` text DEFAULT NULL,--contiene un resumen del campo temario, que es el que se usa para hacerlo figurar en los certificados de participación o certificados de superación que se emite al alumno del curso al finalizarlo
+  `contenidos_actu` int(11) DEFAULT 0,--contiene la fecha en la que se ha actualizado los contenidos del curso. La fecha está en formato unix_timestamp
+  `link_demo` varchar(250) DEFAULT NULL,--contiene la URL en la que se encuentra una demo del curso
+  `imagen` varchar(250) DEFAULT NULL,--contiene la URL en la que se encuentra una imagen que representa al curso. La ficha en PDF del curso tira de este campo, así como el propio campus de Moodle tira de este campo.
+  `visible` tinyint(1) unsigned NOT NULL DEFAULT 1,--indica si el curso debe ser visible para comerciales y alumnos (valor 1) o no debe ser visible (valor 0). Debe coincidir con el campo de Moodle mdl_course.visible
+  `category` bigint(10) unsigned NOT NULL DEFAULT 0,--indica el ID de la categoría del curso. Se relaciona con cat_cursos.id 
+  `sortorder` bigint(10) unsigned NOT NULL DEFAULT 0,--indica la posición en la que ordena el curso en su categoría. Y además debe coincidir con el campo de Moodle que registre el orden del curso en Moodle
+  `temario_txt` text DEFAULT NULL,--contiene el temario del curso, limpio en formato de texto
+  `horas_tele` int(10) unsigned NOT NULL DEFAULT 0,--indica el número de horas elearning (online) que dura el curso
+  `horas_dist` int(10) unsigned NOT NULL DEFAULT 0,--indica el número de horas distancia (por correo postal) que dura el curso
+  `horas_pres` int(10) unsigned NOT NULL DEFAULT 0,--indica el número de horas presenciales o tele-presenciales en aula virtual que dura el curso
+  `tipo_contenido` smallint(5) unsigned NOT NULL DEFAULT 0,--se relaciona con el campo tipos_contenido.id y la finalidad es indicar el tipo de contenido pedagógico y el enfoque metodológico con el que está construido un curso
+  `simulador` smallint(5) unsigned NOT NULL DEFAULT 0,--indica si el curso cuenta con un simulador de la materia estudiada (valor 1) o no (valor 0)
+  `autoevaluaciones` smallint(5) unsigned NOT NULL DEFAULT 0,--indica si el curso cuenta con autoevaluaciones (valor 1) o no (valor 0)
+  `manual_impreso` smallint(5) unsigned NOT NULL DEFAULT 0,--en desuso
+  `videotutoriales` smallint(6) DEFAULT 0,--indica si el curso cuenta con videos (valor 1) o no (valor o)
+  `cd_dvd` smallint(5) unsigned NOT NULL DEFAULT 0, en desuso
+  `ejercicios_practicos` smallint(6) DEFAULT 0, --indica si el curso cuenta con ejercicios prácticos (valor 1) o no (valor o)
+  `nro_paginas_manual` smallint(5) unsigned NOT NULL DEFAULT 0, en desuso
+  `publicidad` smallint(5) unsigned NOT NULL DEFAULT 1,--se relaciona con el campo motivos_publi.id y sirve para saber si el curso es visible para acciones publicitables y marketing o no lo es
+  `foto_tutor` varchar(255) DEFAULT NULL,--contiene la URL que contiene la foto del tutor por defecto del curso
+  `desmatricular_alumnos` smallint(5) unsigned NOT NULL DEFAULT 1,--le indica al sistema si al terminar el curso, el sistema debe desmatricular en el campus Moodle al alumno (valor 1) o no (valor 0)
+  `modulo` smallint(5) unsigned DEFAULT 0,--
+  `instancia_modulo` int(11) DEFAULT 0,--contiene un valor entre 1 y 24 que indica el tipo de módulo usado en el campus Moodle que contiene el material didáctico. Corresponde con el campo de Moodle mdl_course_modules.id. Ejemplo de valores: 1-assignment, 2-chat, 3-choice, 4-data, 5-forum, 6-glossary, 7-hotpot, 8-journal, 9-label, 11-lesson, 12-quiz, 13-resource, 14-scorm, 15-survey, 16-wiki, 17-workshop, 18-feedback, 19-folder, 20-imscp, 21-page, 22-url, 23-lti, 24-assign, 25-book, 26-hvp
+  `conversion` decimal(10,2) NOT NULL DEFAULT 0.00,--está en desuso pero trataba de guardar un valor que indica cuántas oportunidades (cupones recibidos) de este curso se convertían en ventas
+  `rentabilidad` decimal(10,2) NOT NULL DEFAULT 0.00,--está en desuso pero trataba de guardar un valor de la rentabilidad que deja el curso teniendo en cuenta el campo -conversión-
+  `last_update` int(10) unsigned NOT NULL DEFAULT 0,--indica la fecha en la que se ha actualizado el curso en la web corporativa (wordpress). Está en formato unix_timestamp
+  `coste_licencia` decimal(10,2) NOT NULL DEFAULT 0.00,--indica el precio sin IVA que nos cobra el proveedor por cada matrícula del curso
+  `coste_libros` decimal(10,2) NOT NULL DEFAULT 0.00,--en desuso
+  `sig_curso` int(10) NOT NULL DEFAULT 0,--indica el ID del curso que sería el más razonable que hiciera el alumno una vez terminado este curso
+  `argumentario` text DEFAULT NULL,--contiene en modo texto, argumentos que puede usar el comercial para vender el curso
+  `notas` text DEFAULT NULL,--contiene en modo texto, notas aclaratorias sobre el curso, las notas pueden ser de cualquier temática
+  `horas_prove` smallint(6) DEFAULT 0,--indica el número de horas de duración que sugiere el proveedor para el curso
+  `cursoid_prove` varchar(255) DEFAULT NULL,--indica el ID que usa internamente el proveedor para identificar este curso
+  `requisitos` text DEFAULT NULL,--indica los requisitos previos que debe cumplir el alumno para realizar el curso. En formato HTML
+  `obsoleto` smallint(6) DEFAULT 0,--indica si el curso está obsoleto (valor 1) o no (valor 0)
+  `comercializable` smallint(6) DEFAULT 1,indica si el curso es apto para ser vendido o comercializado (valor 1) o no (valor 0)
+  `internacional` smallint(6) DEFAULT 1,--indica si el curso es vendible internacionalmente (valor 1) o solo se puede vender en España (valor 0)
+  `herramienta_seguimiento` smallint(6) DEFAULT 1,--no está muy claro su uso, pero parece indicar si el curso cuenta con herramientas de seguimiento (valor 1) o no (valor 0)
+  `manual_pdf` smallint(6) DEFAULT 0,--indica si el curso dispone como recurso adicional de uno o más manuales en PDF (valor 1) o no tiene ningún manual en PDF (valor 0)
+  `fecha_creacion` int(11) DEFAULT 0,--indica la fecha en la que se ha creado el registro del curso en formato unix_timestamp
+  `forzar_temario` smallint(6) DEFAULT 0,--se usa para forzar a los procesos nocturnso del sistema a crear de nuevo la ficha en PDF del curso. Usamos valor 1 para forzar la creación y 0 para no forzarla
+  `forzar_actu_web` smallint(6) DEFAULT 0,--se usa para forzar a los procesos nocturnso del sistema a actualizar la ficha del curso en la Web de la empresa (wordpress). Usamos valor 1 para forzar la creación y 0 para no forzarla
+  `itinerario` smallint(6) DEFAULT 0,--indica si el curso es un itinerario formado por varios cursos (valor 1) o es un curso normal (0)
+  `fiabilidad_progreso_scorm` smallint(6) DEFAULT 0,--indica si para calcular el progreso del alumno en el curso podemos fiarnos de la información que se obtiene del SCORM en Moodle o no. Los valores son: 0=no es fiable, 1=es fiable, 2=usamos la fiabilidad marcada en el proveedor en el campo proves.fiabilidad_progreso_scorm
+  `ratio_log_horas` decimal(10,5) DEFAULT 0.00000,--en los cursos en los que el valor de fiabilidad_progreso_scorm es 0, es decir, no es fiable el progreso informado por el SCORM, usamos este ratio para hacer un cálculo y estimar las horas que lleva de progreso el alumno
+  `antetitulo` varchar(255) DEFAULT NULL,--con intención comercial, es un texto que sirve como antetítulo del curso. Se hace figurar en varios sitios (ficha en PDF, Web) antes del título del curso. 
+  `subtitulo` varchar(255) DEFAULT NULL,--con intención comercial, es un texto que sirve como subtítulo del curso. Se hace figurar en varios sitios (ficha en PDF, Web) justo después del título del curso. 
+  `ult_mod_naming` int(11) DEFAULT 0,--contiene la fecha en la que ha sido modificado el nombre del curso con intencion de hacer más llamativo el curso a efectos comerciales. La fecha está guardada en formato unix_timestamp. Valor 0 indica que el nombre del curso no ha sido trabajado comercialmente
+  `competencias` text DEFAULT NULL,--contiene las competencias que desarrolla el alumno al realizar el curso. En formato texto
+  `no_comprable` smallint(6) DEFAULT 0,--no está claro su uso, pero es posible que sirva para indicar si el curso no se puede comprar por la web de la emrpesa (valor 1) o si se puede comprar (valor 0)
+  `tipo_activa_scorm` smallint(6) DEFAULT 0,--indica de qué manera el proveedor va a contabilizar el consumo de una licencia por el uso del curso. Posibles valores: 0=no está definiti, 1=al solicitar al proveedor la matrícula, 2=cuando el alumno accede a los contenidos del curso, 3=cuando el alumno accede a la lección
+  `servicio` smallint(6) DEFAULT 0,--indica si en lugar de un curso, el registro describe un servicio, es decir, no se trata de un curso, sino de un servicio. Y por lo tanto el aplicativo no se comporta igual con el alumno, por ejemplo, no hay seguimiento, no se emite un certificado, etc. Valor 0=es un curso. Valor 1=es un servicio
+  `html5` varchar(25) DEFAULT NULL,--indica si el contenido del curso es HTML5 o no. Valores: 0=sin definit, SI=el curso es HTML5, NO=El curso no es HTML5, PROVE=se toma el valor del campo proves.html5
+  `info_importante` text DEFAULT NULL,--contiene en modo texto, indicaciones importantes para el comercial a la hora de vender el curso
+  `revision_fecha` int(11) DEFAULT 0,--indica en formato unix_timestamp, en que fecha se ha confirmado como revisado el curso. Si es valor es 0 es que no se ha confirmado que el curso ha sido revisado
+  `revision_user` int(11) DEFAULT 0,--indica el ID del usuario que ha confirmado que el curso está revisado. Se relaciona con el campo users.userid
+  `duracion_forzada` smallint(6) DEFAULT 0,--indica si a la hora de registrar en el aplicativo la venta de este curso, el aplicativo tiene que exigir al comercial que la duración del curso corresponda con la duración indicada en el título del curso
+  `ultmodif` timestamp NOT NULL DEFAULT from_unixtime(`last_update`) ON UPDATE current_timestamp(),--contiene la fecha en la que se ha modificado algún dato del registro en formato "2026-01-14 00:00:28"
+  PRIMARY KEY (`cid`),
+  UNIQUE KEY `Index_cursoid` (`cursoid`),
+  KEY `IDX_aux_cursos_proveid` (`proveid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5379 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;

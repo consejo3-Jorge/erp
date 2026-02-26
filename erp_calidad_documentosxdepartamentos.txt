@@ -1,0 +1,10 @@
+/*Propósito de la tabla: Sirve para relacionar departamentos de la empresa con documentos del sistema de calidad. Un documento del sistema de calidad puede estar vinculado a uno o más departamentos. El resto de departamentos no deberían tener acceso a él*/
+
+CREATE TABLE `erp_calidad_documentosxdepartamentos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Nro. relación',--id único de la relación
+  `documento` int(11) DEFAULT 0 COMMENT 'Id. Documento',--id del documento a asociar al departamento. Se relaciona con la tabla erp_calidad_documentos.id
+  `departamento` int(11) DEFAULT 0 COMMENT 'Id. departamento',--id del departamento, se relaciona con la tabla de departamentos, que ahora mismo no sé cuál es y tenemos que dejarlo pendiente de aclarar.
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1415 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

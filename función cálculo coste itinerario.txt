@@ -1,0 +1,22 @@
+**********************************************************************************************************************************************************************
+función calc_coste_mat
+
+Uso:Se usa para calcular el coste de un itinerario formado por varias matrículas:
+Nota: Se han usado 'cursores' por cada af porque si tiene libros o costes turor hay que ver cada af.
+
+¿Cómo se hace la llamada?:
+
+calc_coste_mat(<<nro.matrícula (matid)>>,<<calcula licencia(0=>no, 1=>si)>>,<<calcula libros(0=>no,1=>si)>>,<<calcula_coste_tutor_presenciales(0=>no,1=>si)>>)
+
+Ejemplos:
+Para sumar un determinado coste, se pone 1, ejemplos:
+
+calc_coste_mat(12718,1,0,1) te calculará los costes de licencia+costes de tutor presencial de la matrícula matid=12718
+
+calc_coste_mat(12718,1,0,0) solo calcula coste licencia
+
+calc_coste_mat(12718,1,1,0) te calculará los costes de licencia+costes de libros de la matrícula matid=12718
+
+calc_coste_mat(12718,1,1,1) te calculará el total de costes, es decir los costes de licencia+costes de libros+costes tutor presencial  de la matrícula matid=12718
+
+**********************************************************************************************************************************************************************

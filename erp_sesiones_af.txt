@@ -1,0 +1,35 @@
+/*Propósito de la tabla: contiene información sobre las sesiones presenciales que se han programado para una acción formativa.
+Existen dos tipos de sesiones presenciales:
+Las "colectivas", que se pueden considerar como las más normales, en las que un tutor da clase a N alumnos.
+Las "individuales", que el tutor da a un solo alumno.
+Luego están las sesiones especiales, que permiten a los alumnos elegir flexiblemente a qué sesiones apuntarse. El campo erp_sesiones_af.es_especial, cuando es 1, indica que es una sesión especial.
+*/
+
+CREATE TABLE `erp_sesiones_af` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único de la sesión
+  `id_venta_detalle` int(11) DEFAULT 0,--indica a que venta de detalle se asocia esta sesión. Se relaciona con el campo erp_ventas_detalle.id
+  `accfid` int(11) DEFAULT 0,--indica a qué acción formativa se asocia esta sesión. Se relaciona con el campo acc_formativas.id
+  `fecha` int(11) DEFAULT 0, -- indica la fecha en la que se celebra la sesión, en formato unix_timestamp
+  `mananas_ini` time DEFAULT '00:00:00',--si la sesión es de mañana, inidica a qué hora se inicia
+  `mananas_fin` time DEFAULT '00:00:00',--si la sesión es de mañana, inidica a qué hora se finaliza
+  `tardes_ini` time DEFAULT '00:00:00',--si la sesión es de tarde, inidica a qué hora se inicia
+  `tardes_fin` time DEFAULT '00:00:00',--si la sesión es de tarde, inidica a qué hora se finaliza
+  `duracion` int(11) DEFAULT 0,--indica la duración de la sesión en minutos
+  `horario` varchar(255) DEFAULT NULL,--recoge en formato texto legible, el horario de la sesión, por ejemplo:"Tardes de 18:30 a 19:30"
+  `lugar` varchar(255) DEFAULT NULL,--indica el lugar en el que se celebrará la reunión, suele ser una dirección postal  o también puede ser una URL de un sitio como Google Meet
+  `telepresencia` smallint(6) DEFAULT 0,--inidica si es telepresencial, es decir, que se celebra con Google Meet o un software similar (1=telepresencial, 0=presencial)
+  `celebrada` smallint(6) DEFAULT 1,--indica si la sesión se ha anulado o no. Si contiene 0 es que ha sido anulada. Si contiene 1 es que o se ha celebrado o se va a celebrar
+  `modificada` smallint(6) DEFAULT 0,--indica si en algún momento se ha mofidicado la sesión inicialmente prevista. 1=modificada, 0=no modificada
+  `notificados_cambios` smallint(6) DEFAULT 0,--indica, en caso de que haya sido modificada la sesión, si se ha notificado a ANCYPEL los cambios.
+  `notificado_tutor` smallint(6) DEFAULT 1,--se desconoce el uso de este campo
+  `notificado_alumno` smallint(6) DEFAULT 1,--se desconoce el uso de este campo
+  `coste_tutor_colectiva` decimal(10,2) DEFAULT 0.00,--indica el coste por hora del tutor para las clases colectivas. Da igual el número de alumnos, solo se cobra esta cantidad por cada clase impartida.
+  `coste_tutor_individual` decimal(10,2) DEFAULT 0.00,--indica el coste pr hora del tutor por cada clase individual
+  `liquidacion` int(11) DEFAULT 0,--si la sesión ha sido ya incluida en una liquidación para pagar al tutor, aquí figura el id de la liquidación. Se relaciona con el campo erp_liquidaciones.id
+  `factura` int(11) DEFAULT 0,--se desconoce su uso
+  `es_especial` smallint(6) DEFAULT 0,--indica si esta sesión presencial es del tipo "especial" (valor 1) o normal (Valor 0). 
+  `clase` int(11) DEFAULT 0,--indica la clase asociada a esta sesión. Se relaciona con el campo erp_sesiones_clases.id
+  `aula` int(11) DEFAULT 0,--indica en qué aula (que puede ser una ubicación física o una ubicación virtual) se va a celebrar la clase. Se relaciona con el campo erp_sesiones_aulas.id
+  PRIMARY KEY (`id`),
+  KEY `IDX_erp_sesiones_af_accfid` (`accfid`)
+) ENGINE=InnoDB AUTO_INCREMENT=12122 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

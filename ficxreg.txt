@@ -1,0 +1,11 @@
+/*Propósito de la tabla: contiene un índice que relaciona los registros de clientes potenciales con el fichero en concreto. Un registro puede estar en varios ficheros*/
+
+
+CREATE TABLE `ficxreg` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,--es un ID único de la relación registro-fichero
+  `fic` int(10) unsigned NOT NULL,--indica el ID del fichero al que corresponde, se relaciona con la tabla FICHEROS.id
+  `reg` int(10) unsigned NOT NULL,--indica el ID del registro de potenciales clientes al que se refiere, se relaciona con la tabla REGISTROS.id
+  PRIMARY KEY (`id`),
+  KEY `Index_fic` (`fic`),
+  KEY `Index_reg` (`reg`)
+) ENGINE=InnoDB AUTO_INCREMENT=620308 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

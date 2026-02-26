@@ -1,0 +1,16 @@
+/*Propósito de la tabla: contiene información sobre las clases asociadas a las sesiones presenciales*/
+
+CREATE TABLE `erp_sesiones_clases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único que identifica la clase
+  `aulaid` int(11) DEFAULT 0,--contiene el id del aula en donde se desarrollará la clase. Se relaciona con el campo erp_sesiones_aulas.id
+  `nombre` varchar(255) DEFAULT NULL,--nombre de la clase. Generalmente contendrá el nombre del curso
+  `fecha` int(11) DEFAULT 0,--fecha en la que se celebra la clase. Se registra en formato unix_timestamp
+  `url` varchar(255) DEFAULT NULL,--en caso de ser una clase telepresencial, puede contener la URL aunque no siempre.
+  `hora_ini` time DEFAULT '00:00:00',--hora de inicio de la clase
+  `duraccion` int(11) DEFAULT 0,--duración en minutos de la clase
+  `cursoid` int(11) DEFAULT 0,--id del curso con el que está asociada la clase. Se relaciona con el campo aux_cursos.cursoid
+  `alumnos_max` int(11) DEFAULT 0,--máximo de alumnos que pueden acudir a la clase.
+  `gotomeeting_id` int(11) DEFAULT 0,--en desuso
+  `asig_mismo_dia` smallint(6) DEFAULT 1,--indica, si para sesiones especiales, permite a los alumnos inscribirse a esta clase en el mismo día que se celebra (valor 1) o no deja inscribirse en el mismo día (valor 0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=78023 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

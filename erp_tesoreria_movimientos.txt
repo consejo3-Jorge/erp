@@ -1,0 +1,30 @@
+/*Propósito de la tabla: contiene los movimientos de tesorería*/
+
+CREATE TABLE `erp_tesoreria_movimientos` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, --id del movimiento
+  `idcta` int(11) DEFAULT 0, --id de la cuenta de tesorería
+  `fecha_mov` int(11) DEFAULT NULL, --fecha del movimiento en formato unixtime
+  `fecha_valor` int(11) DEFAULT NULL, --fecha de valorr movimiento en formato unixtime, en realidad casi no tiene utilidad
+  `concepto` varchar(255) DEFAULT NULL, -- contiene el concepto del movimiento
+  `importe` decimal(10,2) DEFAULT 0.00, --contiene el importe del movimiento
+  `tipo` smallint(6) DEFAULT NULL COMMENT '1=>debe, 2=>haber', -- indica si es debe (1) o haber (2)
+  `divisa` varchar(25) DEFAULT NULL, --inidica el tipo de moneda, 978=Euro
+  `saldo_posterior` decimal(10,2) DEFAULT 0.00, --indica el saldo de la cuenta de tesorería tras incorporar este movimiento
+  `oficina` varchar(25) DEFAULT NULL, --indica la oficina bancaria, sin uso.
+  `concepto1` text DEFAULT NULL, -- texto que contiene el valor introducido como concepto #1
+  `concepto2` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #2
+  `concepto3` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #3
+  `concepto4` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #4
+  `concepto5` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #5
+  `concepto6` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #6
+  `concepto7` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #7
+  `concepto8` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #8
+  `concepto9` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #9
+  `concepto10` text DEFAULT NULL,-- texto que contiene el valor introducido como concepto #10
+  `contrapartida` int(11) DEFAULT 0, -- en algunas operaciones contiene el ID del movimiento de tesorería que es contrapartida de éste
+  `contabilizado` smallint(6) DEFAULT 0, --indica si se ha contabilizado por parte de la gestoría No (0) ó SI (1)
+  `notas` text DEFAULT NULL, -- campo notas aclaratorias
+  PRIMARY KEY (`id`),
+  KEY `IDX_erp_tesoreria_movimientos_fecha_mov` (`fecha_mov`),
+  KEY `IDX_erp_tesoreria_movimientos_idcta` (`idcta`)
+) ENGINE=InnoDB AUTO_INCREMENT=14556 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

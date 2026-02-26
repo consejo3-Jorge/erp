@@ -1,0 +1,10 @@
+/*Propósito de la tabla: contiene los distintos medios de pago que acepta la empresa*/
+
+CREATE TABLE `erp_medios_de_pago` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,--id del medio de pago
+  `cod` varchar(40) DEFAULT NULL,--un código de 2 letras que identifica el medio de pago
+  `nombre` varchar(255) DEFAULT NULL,--nombre del medio de pago
+  `vencimientos` smallint(6) DEFAULT 0,--indica si el medio de pago consiste en vencimientos (1) o no (0)
+  `mensualidades_ingresos` smallint(6) DEFAULT 0, -- indica si el medio de pago cosiste en que se reciban transferencias mensuales por parte del cliente (valor 1) o no (valor 0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

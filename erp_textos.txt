@@ -1,0 +1,10 @@
+/*Propósito de la tabla: contiene textos explicativos, es decir, notas, relacionados con otras tablas. En las otras tablas se guarda el ID del texto"  */
+
+CREATE TABLE `erp_textos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único identificativo del texto
+  `tipo` varchar(20) DEFAULT '0',--puede ser uno de estos 3 valores: texto_plano (indica que es texto plano), HTML_noedit (indica que es HTML y que no ha sido editado), HTML_edit (indica que es HTML y ha sido editado por algún usuario
+  `edit` tinyint(4) DEFAULT 0,--indica si el texto ha sido editado o no por algún usuario
+  `texto` text DEFAULT NULL,--contiene el texto o html
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4841 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

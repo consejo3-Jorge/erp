@@ -1,0 +1,13 @@
+/*Propósito de la tabla: Contiene los datos básicos de las remesas de recibos de cobro a clientes que se envían al banco*/
+
+CREATE TABLE `erp_remesas_bancarias` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,--id interno y único de la remesa
+  `fecha` int(11) DEFAULT 0,--fecha de creación de la remesa en formato unixtimestamp
+  `cta_tesoreria` int(11) DEFAULT 0,--id de la cuenta de tesorería por la que se va a enviar la remesa. De facto indica la cuenta bancaria que se va a uasr para girar los recibos a los clientes
+  `efectos` smallint(6) DEFAULT 0,--número de recibos que se están incluyendo en la remesa
+  `importe` decimal(10,2) DEFAULT 0.00,--importe que suman todos los recibos enviados a la remesa
+  `fic` varchar(255) DEFAULT NULL,--nombre del fichero de texto en formato Norma 19 que se ha generado para poder subirlo a la web del banco
+  `conciliada` smallint(6) DEFAULT 0,--indica si el importe de la remesa ha sido ingresado ya por el banco (valor 1) o todavía no (valor 0)
+  `norma` smallint(6) DEFAULT 0,--indica bajo qué norma de la Asociación Bancaria Española se ha generadl la remesa. Generalmente Normal 19
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=360 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

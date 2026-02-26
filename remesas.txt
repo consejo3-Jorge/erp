@@ -1,0 +1,24 @@
+/*Propósito de la tabla: contiene los remesas de matrículas vendidas, y es tabla clave para identificar cliente, forma de pago, comercial*/
+
+
+CREATE TABLE `remesas` (
+  `rid` int(10) unsigned NOT NULL AUTO_INCREMENT, --id interno de la remesa
+  `remid` int(10) unsigned NOT NULL, -- id de la remesa, éste es el campo que se usa para relacionarse con el resto de tablas
+  `comid` int(10) unsigned NOT NULL, --id del comercial que ha vendido las matrículas
+  `empid` int(10) unsigned NOT NULL, --id del cliente
+  `fecini` date NOT NULL, --id de la fecha de la remesa
+  `envio_sms` smallint(5) unsigned NOT NULL DEFAULT 1, --indica si se envían SMS a los alumnos (1) o no se envía (0)
+  `envio_email` smallint(5) unsigned NOT NULL DEFAULT 1,  --indica si se envían emails a los alumnos (1) o no se envía (0)
+  `delegacion` int(11) DEFAULT 0, -- indica el ID de la delegación del cliente sobre la que se realiza la venta
+  `fpago` smallint(6) DEFAULT 0, -- inidica el ID de la forma de pago usada
+  `pedido_cli` varchar(20) DEFAULT NULL, -- si el cliente no ha dado un número de pedido interno, figurará en este campo
+  `ventaid` int(11) DEFAULT 0, -- id de la cabecera de venta que ha generado la remesa
+  `mensualidades` smallint(6) DEFAULT 0, -- indica si se la forma de pago de la remesa es a base de mensualidades
+  `plazos` smallint(6) DEFAULT 0, -- indica el número de plazos en que nos va a pagar el cliente
+  `espacio_plazo1` smallint(6) DEFAULT 0, -- inidica el número de días desde la fecha de la remesa en la que se va a producir el primer pago
+  `espacio_entre_plazos` smallint(6) DEFAULT 0, -- indica el número de días a dejar entre plazo y plazo
+  PRIMARY KEY (`rid`),
+  UNIQUE KEY `UK_remesas_remid` (`remid`),
+  UNIQUE KEY `i_remid` (`remid`),
+  KEY `i_empid` (`empid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6234 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;

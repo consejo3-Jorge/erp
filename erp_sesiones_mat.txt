@@ -1,0 +1,25 @@
+/*Propósito de la tabla: contiene información adicional sobre las sesiones presenciales.
+Por cada sesión presencial, se crea un registro en la tabla erp_sesiones_af.
+Luego, por cada matrícula presente en la acción formativa implicada, se crea un registro en la tabla erp_sesiones_mat
+*/
+
+
+CREATE TABLE `erp_sesiones_mat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único de la sesión de matrícula
+  `id_sesion_af` int(11) DEFAULT 0,--indica el id de la sesión de acción formativa, se relaciona con el campo erp_sesiones_af.id
+  `matid` int(11) DEFAULT 0,--indica el id de la matrícula asociada, se relaciona con el campo matriculas.matid
+  `fecha` int(11) DEFAULT 0,--indica en la fecha en la que se celebra la sesión. Se guarda en formato unix_timestamp
+  `mananas_ini` time DEFAULT '00:00:00',--si la sesión es de mañana, inidica a qué hora se inicia
+  `mananas_fin` time DEFAULT '00:00:00',--si la sesión es de mañana, inidica a qué hora se finaliza
+  `tardes_ini` time DEFAULT '00:00:00',--si la sesión es de tarde, inidica a qué hora se inicia
+  `tardes_fin` time DEFAULT '00:00:00',--si la sesión es de tarde, inidica a qué hora se finaliza
+  `celebrada` smallint(6) DEFAULT 1,--indica si se ha suspendido o no ha asistido el alumno (valor 0) o no (valor 1)
+  `provisional` smallint(6) DEFAULT 0,--se desconoce su uso
+  `id_calendar_user` int(11) DEFAULT 0,--se usa para saber si se ha creado para el alumno en Moodle un registros en el calendario del campus. Se relaciona con el campo de Moodle mdl_event.id
+  `id_calendar_tutor` int(11) DEFAULT 0,--se usa para saber si se ha creado para el tutor en Moodle un registros en el calendario del campus. Se relaciona con el campo de Moodle mdl_event.id
+  `coste_tutor` decimal(10,2) DEFAULT 0.00,--contiene el importe en euros a pagar por esta sesión de matrícula al tutor
+  `liquidacion` int(11) DEFAULT 0,--si la sesión ha sido ya incluida en una liquidación para pagar al tutor, aquí figura el id de la liquidación. Se relaciona con el campo erp_liquidaciones.id
+  `claseid` int(11) DEFAULT 0,--indica la clase asociada a esta sesión. Se relaciona con el campo erp_sesiones_clases.id
+  `es_especial` smallint(6) DEFAULT 0,--si la sesión es una sesión de las llamadas especiales, contiene 1. Si es una sesión normal, contiene 0.
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51318 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

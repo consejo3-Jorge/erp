@@ -1,0 +1,104 @@
+/*Propósito de la tabla: contiene las matrículas impartidas o que se van a impartir*/
+
+CREATE TABLE `matriculas` (
+  `mid` int(10) unsigned NOT NULL AUTO_INCREMENT,  -- es el ID interno de la matrícula, pero realmente no se usa
+  `matid` int(10) unsigned NOT NULL, -- es el ID usado para identificar inequívocamente a las matrículas, es con el que se relacionan otras tablas con esta
+  `userid` int(10) unsigned NOT NULL, -- contiene el ID del alumno, se relaciona con otra base de datos de Moodle (visionyvalor.mdl_user.id)
+  `fecini` date NOT NULL, -- fecha de inicio de la matrícula, el dato es redundante porque la fecha de inicio real sería la que viene en la acción formativa.
+  `user` varchar(128) NOT NULL, --nombre del alumno
+  `accfid` int(10) unsigned NOT NULL DEFAULT 0, --es el ID de la acción formativa a la que pertenece la matrícula, se relaciona con acc_formativas.id
+  `remid` int(10) unsigned NOT NULL, --contiene el ID de la remesa de matrículas, se relaciona con remesas.remid
+  `cursoid` int(10) unsigned NOT NULL DEFAULT 0, -- es redundante porque contiene el ID del curso del que versa la matrícula, aunque realmente el ID del curso está en acc_formativas.cursoid
+  `empid` int(10) unsigned DEFAULT 0, -- es redundante porque contiene el ID de la empresa o cliente del curso, el dato correcto está en remesas.empdid
+  `terminada` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si la matrícula y su proceso formativo está terminado (1) o sin terminar (0)
+  `comprada` smallint(5) unsigned NOT NULL DEFAULT 0, -- en desuso
+  `manuales` smallint(5) unsigned NOT NULL DEFAULT 0, -- en desuso
+  `etq_manuales` smallint(5) unsigned NOT NULL DEFAULT 0, -- en desuso
+  `etq_titulo` smallint(5) unsigned NOT NULL DEFAULT 0, --en desuso
+  `titulo` smallint(5) unsigned NOT NULL DEFAULT 0, --en desuso
+  `ficha` smallint(5) unsigned NOT NULL DEFAULT 0, --se desconoce su uso
+  `proyecto` bigint(20) NOT NULL DEFAULT 0, --indica la fecha en formato unixtime en la que el alumno ha presentado la prueba de evaluación final.
+  `name_proyecto` varchar(255) DEFAULT NULL, --indica el nombre de la prueba de evaluación final
+  `enviado_aviso_realiz_proyecto` int(11) DEFAULT 0, --indica si le hemos enviado un aviso para que realice la prueba de evaluación final (1) o no se lo hemos enviado (0)
+  `enviado_acuse_prueba` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si le hemos enviado un email con el acuse de recibo de la prueba de evaluación final (1) o no (0)
+  `enviado_certificado` smallint(5) unsigned NOT NULL DEFAULT 0, --indica si le hemos enviado un email con el enlace para que se descargue el certificado de haber realizado el curso (1) o no (0)
+  `ult_aviso_proyecto` smallint(5) unsigned NOT NULL DEFAULT 0, --se lleva el control de los avisos enviados al alumno para que realice la prueba final. Pendiente de aclarar cómo se codifican los datos
+  `titulo_c1` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara A del certificado de participación 
+  `titulo_c2` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara B del certificado de participación 
+  `asistencia_c1` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara A del parte de asistencia
+  `asistencia_c2` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara B del parte de asistencia
+  `enc_satisfacion_c1` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara A de la encuesta de satisfacción
+  `enc_satisfacion_c2` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara B de la encuesta de satisfacción
+  `entrega_material_c1` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara A del parte de entrega de materiales
+  `entrega_material_c2` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se ha emitido la cara B del parte de entrega de materiales
+  `prueba_final` smallint(5) unsigned NOT NULL DEFAULT 0, --indica si ha entrgado la prueba final (1) o no (0)
+  `acuse_recibo` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si le hemos enviado el acuse de recibo de la prueba final (1) o no (0)
+  `bienvenida` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si le hemos dado la bienvenida telefónicamente al alumno (1) o no (0)
+  `envio_sms` smallint(5) unsigned NOT NULL DEFAULT 1, -- indica si para esta matrícula se envían SMS al alumno (1) o no (0).
+  `envio_email` smallint(5) unsigned NOT NULL DEFAULT 1, -- indica si para esta matrícula se envían emails al alumno (1) o no (0).
+  `evalua_auto` smallint(5) unsigned NOT NULL DEFAULT 0, -- se desconoce su uso
+  `trami` int(10) unsigned NOT NULL DEFAULT 0, -- se desconoce su uso
+  `calificacion` int(10) unsigned NOT NULL DEFAULT 0, --indica la nota final del alumno, siendo 100 la máxima nota
+  `envio_claves_email` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se le han enviado las claves por email al alumno (1) o no (0)
+  `envio_claves_sms` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si se le han enviado las claves por SMS al alumno (1) o no (0)
+  `campid` smallint(5) unsigned NOT NULL DEFAULT 0, --indica el ID de la campaña de marketing por la que se consigió la matrícula, se relaciona con campanias.id
+  `factura` varchar(40) DEFAULT NULL, --indica el número de factura en la que se ha facturado esta matrícula. Se relaciona con facturas.factu_id. Si está vacío es que no está facturada
+  `instancia_proyecto` int(11) DEFAULT 0, --indica el ID del recurso de Moodle que corresponde con la prueba de final del alumno
+  `link_proyecto` varchar(128) DEFAULT NULL, --contiene el link al recurso de Moodle que contiene la prueba final. Salvo si la prueba final es un cuestionario (ES_QUIZ) o es un SCORM (ES SCORM) o la matrícula es la cabecera de un itinerario (ITINERARIO)
+  `link_titulo` varchar(128) DEFAULT NULL, --en desuso
+  `link_ficha` varchar(128) DEFAULT NULL, --contiene la URL a la ficha de inscripción en PDF
+  `delegacion` int(11) DEFAULT 0, -- contiene el ID de la delegación del cliente a la que está asociada esta matrícula, se relaciona con delegaciones.id
+  `envios_a` smallint(6) DEFAULT 0 COMMENT '0-> al cliente, 1-> al alumno', indica el ID de la delegación del cliente que se usa para remitir el correo postal o materiales. se relaciona con delegaciones.id
+  `nuevo_curso` smallint(6) DEFAULT 0,  -- contiene el ID del curso que se recomienda realizar al alumno tras terminar este. Se relaciona con aux_cursos.cursoid
+  `pvp_fijo` decimal(10,2) DEFAULT 0.00, -- en caso de que la matrícula esté sometida a un precio fijo, dando igual el número de matrículas que haya comprado el cliente, figurará aquí el precio total de las matrículas a facturar al cliente. No el precio por matrícula
+  `pvp` decimal(10,2) DEFAULT 0.00, -- en caso de que la matrícula tenga un precio de venta normal, viene aquí el importe.
+  `libro` tinyint(4) DEFAULT 1, --en desuso
+  `imprime_titulo` tinyint(4) DEFAULT 0, --en desuso
+  `facturable` tinyint(4) DEFAULT 1, --indica si la matrícula es facturable (1) o no (0)
+  `notas_factu` int(11) DEFAULT 0,  -- contiene el ID de las notas referidas a aspectos a tener en cuenta en el proceso de facturación. Las notas están en la tabla erp_textos
+  `notas_compra` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en el proceso de compras de materiales. Las notas están en la tabla erp_textos
+  `notas_tutoria` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en el proceso de tutorización. Las notas están en la tabla erp_textos
+  `notas_trami` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en la tramitación administrativa. Las notas están en la tabla erp_textos
+  `notas_almacen` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en los envíos de almacén. Las notas están en la tabla erp_textos
+  `notas_eo` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta a comunicar a la entidad organizadora. Las notas están en la tabla erp_textos
+  `ventaid` int(11) DEFAULT 0, -- contiene el ID de la venta de la que procede esta matrícula. Se relaciona con erp_ventas_master.id
+  `detalle_ventaid` int(11) DEFAULT 0, -- contiene el ID de la línea de detalle de la venta de la que procede esta matrícula. Se relaciona con erp_ventas_detalle.id
+  `tutorizacion_dinamica` smallint(6) DEFAULT 1, --indica si sobre esta matrícula se realiza proceso de tutorización proactiva (1) o no se realiza (0)
+  `pvp_manuales` decimal(10,2) DEFAULT 0.00, -- desuso
+  `tutoria_reactiva` smallint(6) DEFAULT 0, --indica si sobre esta matrícula se realiza proceso de tutorización reactiva, es decir, atender preguntas de los alumnos (1) o no se realiza (0)
+  `coste_matricula` decimal(10,2) DEFAULT 0.00, -- indica el coste de los materiales comprados al proveedor de contenidos.
+  `coste_libro` decimal(10,2) DEFAULT 0.00, -- indica el coste de los libros empleados
+  `coste_portes` decimal(10,2) DEFAULT 0.00, -- indica el coste a aplicar por los portes
+  `coste_certificadora` decimal(10,2) DEFAULT 0.00, -- indica el coste que nos cobra al entidad organizadora por gestionar la matrícula
+  `pasistencia_pres` smallint(6) DEFAULT 0, --se desconoce su uso
+  `provision_coste_tutor_presencial` decimal(10,2) DEFAULT 0.00, --contiene el coste que se imputa a esta matrícula para pagar al tutor
+  `liquidacion` int(11) DEFAULT 0, --contiene el ID del registro de liquidación de labores del tutoría. Se relaciona con la tabla y campo erp_liquidaciones.id
+  `envio_sms_ses_presenciales` smallint(6) DEFAULT 1, --indica si se le han enviado aviso por SMS al alumno de que tiene clases presenciales (1) o no se le ha enviado (0)
+  `envio_emails_ses_presenciales` smallint(6) DEFAULT 1, indica si se le han enviado aviso por email al alumno de que tiene clases presenciales (1) o no se le ha enviado (0)
+  `parada` smallint(6) DEFAULT 0, -- indica si hemos detenido el proceso de formación para el alumno (1) o no (0). Se para normalmente cuando hay un impago
+  `progreso_auto` decimal(10,2) DEFAULT 0.00, --contiene el porcentaje de curso que calculamos lleva el alumno realizado
+  `ult_recl_certificado` int(11) DEFAULT 0, --fecha en la que hemos reclamado por última vez al alumno que se descargue el certificado de finalización del curso
+  `cl_cliente` varchar(70) DEFAULT NULL, --contiene el ID del alumno que le da el cliente en su propia base de datos. Se usa para procesos de auto-loguin.
+  `cl_esp_1` varchar(70) DEFAULT NULL, -- es una variable sin un uso fijo, se usa para apoyar procesos personalizados con el alumno o cliente.
+  `cl_esp_2` varchar(70) DEFAULT NULL, -- es una variable sin un uso fijo, se usa para apoyar procesos personalizados con el alumno o cliente.
+  `cl_esp_3` varchar(70) DEFAULT NULL, -- es una variable sin un uso fijo, se usa para apoyar procesos personalizados con el alumno o cliente.
+  `marca_logo_campus` int(11) DEFAULT 0, -- contiene el ID de la marca a usar en el campus para la matrícula. Se relaciona con erp_marcas.id
+  `informe_fin` int(11) DEFAULT 0, --se desconoce su uso
+  `primer_acceso_scorm` int(11) DEFAULT 0, --indica en formato unixtime la fecha en la que el alumno ha accedido por primera vez al módulo SCORM que compone la matrícula
+  `ftra_prov` int(11) DEFAULT 0, --indica el ID de la factura de proveedor en la que se nos cobra la matrícula. Se relaciona con la tabla erp_facturas_recibidas.id
+  `coste_aula` decimal(10,2) DEFAULT 0.00, --indica la parte de coste de aula que le corresponde a esta matrícula
+  `coste_traslados` decimal(10,2) DEFAULT 0.00, --indica la parte de coste de traslados del tutor que le corresponde a esta matrícula
+  `coste_manutencion` decimal(10,2) DEFAULT 0.00, --indica la parte de coste de manutención del tutor que le corresponde a esta matrícula
+  `coste_varios` decimal(10,2) DEFAULT 0.00, --indica la parte de coste varios que le corresponde a esta matrícula
+  `bonif_cumple_requisitos` smallint(6) DEFAULT 0, --indica si la matrícula cumple con los requisitos para ser bonificada (1) o no (0)
+  `fecha_imputacion` date DEFAULT NULL, -- indica la fecha en formato date (yyyy/mm/dd) en la que se tiene en cuenta la matrícula a efecto de liquidación de comisiones para los comerciales
+  PRIMARY KEY (`mid`),
+  UNIQUE KEY `I_matriculas_matid` (`matid`),
+  KEY `I_matriculas_empid` (`empid`),
+  KEY `i_matriculas_remid` (`remid`),
+  KEY `I_matriculas_userid` (`userid`),
+  KEY `IDX_matriculas_detalle_ventaid` (`detalle_ventaid`),
+  KEY `FK_matriculas_acc_formativas_id` (`accfid`),
+  KEY `FK_matriculas_aux_cursos_cursoid` (`cursoid`),
+  KEY `FK_matriculas_erp_ventas_master_id` (`ventaid`)
+) ENGINE=InnoDB AUTO_INCREMENT=76213 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AVG_ROW_LENGTH=461;

@@ -1,0 +1,9 @@
+/*Propósito de la tabla: Contiene los estados en los que se puede encontrar una versión de un documento del sistema de gestión de calidad de la empresa. Un ejemplo de estados típico es pendiente de revisión, otro pendiente de distribución, otro es distribuido. Básicamente el fujo es: crear->revisar->aprobar->Distribuir->Obsoleto.*/
+
+CREATE TABLE `erp_calidad_versiones_estados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'nro estado versión',--id del estado
+  `nombre` varchar(45) DEFAULT NULL COMMENT 'Nombre',--descripción del estado
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

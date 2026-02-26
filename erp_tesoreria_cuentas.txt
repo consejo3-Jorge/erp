@@ -1,0 +1,23 @@
+/*Propósito de la tabla: contiene las distintas cuentas de tesorería de la empresa*/
+
+CREATE TABLE `erp_tesoreria_cuentas` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, -- id de la cuenta
+  `descripcion` varchar(255) DEFAULT NULL, -- texto que describe la cuenta
+  `cta_contable` varchar(40) DEFAULT NULL, -- otro texto más reducido que describe la cuenta
+  `ine` varchar(9) DEFAULT NULL, --sin uso
+  `banco` varchar(50) DEFAULT NULL, --indica la entidad bancaria donde está la cuenta. Puede estar en blanco
+  `dir` varchar(128) DEFAULT NULL, -- dirección de la entidad bancaria
+  `cp` varchar(5) DEFAULT NULL, -- código postal de la entidad bancaria
+  `localidad` varchar(128) DEFAULT NULL, --localidad de la entidad bancaria
+  `provid` int(11) DEFAULT 0, -- id de la provincia, está alineado con los códigos postales de correos
+  `tfno` varchar(20) DEFAULT NULL, --teléfono de la entidad bancaria
+  `contacto` varchar(128) DEFAULT NULL, --persona de contacto de la entidad bancaria
+  `url_be` varchar(255) DEFAULT NULL, --URL de la web de la entidad bancaria
+  `saldos_afavor` smallint(6) DEFAULT 0, --indica si es una cuenta de tesorería para guardar los saldos a favor de los clientes, puede ser 1 (SI) ó 0 (NO)
+  `param_carga` text DEFAULT NULL, -- sin uso
+  `notas` text DEFAULT NULL, -- notas aclaratorias uso de la cuenta de tesorería
+  `codi` smallint(6) DEFAULT 1 COMMENT '1=>norma 43 , 2=> paypal', --indica si para cargar masivamente sus movimientos se usa norma 43 (valor 1) o paypal (valor 2)
+  `mx_importe` decimal(10,2) DEFAULT 99999999.00, --indica el máximo importe que debe tener una remesa de recibos norma 19 emitidos para la cuenta
+  `iban` varchar(50) DEFAULT NULL, -- indica el IBAN de la cuenta
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

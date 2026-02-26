@@ -1,0 +1,18 @@
+/*Propósito de la tabla: Contiene el registro de versiones y su estado, de cada documento existente en nuestro sistema de gestión de calidad, basado en ISO 9001*/
+
+CREATE TABLE `erp_calidad_versiones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Nro. de versión', --es el id único de la versión del documento
+  `version` int(11) DEFAULT 0 COMMENT 'Versión',--indica la versión, son números correlativos que comienzan en el 1 para cada documento
+  `documento` int(11) DEFAULT 0 COMMENT 'id documento',--indica el ID del documento al que se refiere la versión. Se relaciona con el campo erp_calidad_documentos.id
+  `estado` smallint(6) DEFAULT 0 COMMENT 'Estado',--indica el estado en el que está el documento en cuanto a su situación de distribución, sin revisar, revisado, distribuido, etc., se relaciona con el campo erp_calidad_versiones_estados.id
+  `fecha_creacion` int(11) DEFAULT 0 COMMENT 'Fecha de aprobación del documento',--indica la fecha de creación de la versión, se almacena en formato unix_timestamp
+  `creado_por` int(11) DEFAULT 0 COMMENT 'ID del usuario que lo creó',--indica el id de usuario que ha creado el documento, se relaciona con el campo users.userid
+  `revisada` smallint(6) DEFAULT 0 COMMENT 'revisada=>1, no revisada=>0',--indica si la versión ha sido revisada (1) o todavía no ha sido revisada (0)
+  `fecha_revision` int(11) DEFAULT 0 COMMENT 'Fecha de revisión',--indica la fecha de revisión de la versión, se almacena en formato unix_timestamp
+  `revisado_por` int(11) DEFAULT 0 COMMENT 'ID del usuario que lo revisó', --indica el id de usuario que ha revisado el documento, se relaciona con el campo users.userid
+  `aprobada` smallint(6) DEFAULT 0 COMMENT 'aprobada=>1, no aprobada=>0',--indica si ha sido aprobada la versión (1) o no (0)
+  `fecha_aprobacion` int(11) DEFAULT 0 COMMENT 'Fecha de aprobación',--indica la fecha de apobación de la versión, se almacena en formato unix_timestamp
+  `aprobado_por` int(11) DEFAULT 0 COMMENT 'ID del usuario que lo aprobó',--indica el id de usuario que ha aprobado el documento, se relaciona con el campo users.userid
+  `notas` text DEFAULT NULL,--contiene en formato texto, notas o instrucciones de esta versión del documento
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=683 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

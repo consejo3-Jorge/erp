@@ -1,0 +1,26 @@
+/*Propósito de la tabla: contiene los distintos cobros realizados a clientes o pagos realizados a proveedores*/
+
+CREATE TABLE `erp_cobros_pagos` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, -- id del cobro o pago
+  `id_movimiento` int(11) DEFAULT 0, --id del movimiento de tesorería con el que se relaciona
+  `tipo` smallint(6) DEFAULT 0 COMMENT '1=>pago,2=>ingreso', --indica si es un pago a proveedor (1) o es un ingreso de un cliente (2)
+  `empid` int(11) DEFAULT 0, -- indica el ID del cliente
+  `fecha` int(11) DEFAULT NULL, --indica la fecha en formato unixtime del cobro o pago
+  `importe` decimal(10,2) DEFAULT 0.00, -- indica el importe del cobro o pago
+  `factu_id` varchar(40) DEFAULT NULL, -- indica el número de de factura con el que se relaciona
+  `vencimiento` int(11) DEFAULT NULL, -- cuando el cobro es un vencimiento, es decir, es un pago que se espera recibir indica la fecha en la que debe llegar, en formato unixtime
+  `remid` int(11) DEFAULT 0, -- indica el ID de la remesa de recibos en la que se ha incluido el pago
+  `notas` text DEFAULT NULL, -- notas aclaratorias del pago
+  `conciliado_user` int(11) DEFAULT 0, --indica el ID del usuario que ha conciliado el pago
+  `conciliado_fecha` int(11) DEFAULT NULL, -- indica la fecha en la que se ha conciliado el pago en formato unixtime
+  `tipo_fpago` smallint(6) DEFAULT 0 COMMENT '0->normal, 1-> mensulidad, 2->vencimiento, 3-> entrada, 4->devolucion recibo, 5->devolucion de recibo reemitido', -- indica el tipo de forma de pago
+  `dventaid` int(11) DEFAULT 0, -- indica el id del detalle de la venta que ha originado la operación
+  `id_remesa` int(11) DEFAULT 0, -- indica el ID de la remesa de matrículas asociada al cobro
+  `envio_email_recl_pago` int(11) DEFAULT 0, --en caso de ser un cobro basado en vencimientos, indica la fecha en la que se ha reclamado el pago, en formato unixtime
+  `envio_email_recibo` int(11) DEFAULT 0, --en caso de ser un cobro basado en recibos, indica la fecha en la que se ha enviado email informado del envío del recibo al banco, en formato unixtime
+  PRIMARY KEY (`id`),
+  KEY `IDX_erp_cobros_pagos_factu_id` (`factu_id`),
+  KEY `IDX_erp_cobros_pagos_id_movimiento` (`id_movimiento`),
+  KEY `IDX_erp_cobros_pagos_id_remesa` (`id_remesa`),
+  KEY `IDX_erp_cobros_pagos_tipo` (`tipo`)
+) ENGINE=InnoDB AUTO_INCREMENT=12789 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=REDUNDANT;

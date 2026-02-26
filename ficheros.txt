@@ -1,0 +1,14 @@
+/*Propósito de la tabla: contiene la relación de ficheros que hay en el sistema. Dichos ficheros contienen los registros sobre los que realizar acciones de marketing, es decir, son potenciales clientes también llamados prospectos*/
+
+CREATE TABLE `ficheros` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, --contiene el ID único que identifica al fichero
+  `nombre` varchar(45) NOT NULL, --nombre del fichero o base de datos de potenciales clientes
+  `origen` varchar(255) DEFAULT NULL,--nombre del archivo CSV del que se han importado los datos
+  `campos` varchar(250) DEFAULT NULL,--campos que contiene el CSV, separados por punto y coma (;)
+  `nreg` int(10) unsigned NOT NULL DEFAULT 0, --número de registros que contiene el fichero
+  `fecha` date DEFAULT NULL,--fecha en formato AAAA-MM-DD en la que se ha creado el fichero
+  `log` text DEFAULT NULL, -- Se desconoce la fución de este campo
+  `cols` varchar(245) DEFAULT NULL, --se desconoce la función de este campo pero se cree que sirve para relacionar el orden de los campos del CSV expresados en el campo -campos-, puede contener un valor por ejemplo "2;3;4;5;6;7;8;9;10;"
+  `tipo_fic` int(10) unsigned NOT NULL DEFAULT 1, --se desconoce para qué se usa este campo
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

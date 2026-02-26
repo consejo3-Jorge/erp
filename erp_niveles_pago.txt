@@ -1,0 +1,9 @@
+/*Propósito de la tabla: Establecer los distintos niveles de riesgo de las formas de pago.*/
+
+CREATE TABLE `erp_niveles_pago` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,--id único del nivel de forma de riesgo. Cuando menor es el ID más segura para la empresa es la forma de pago. Cuanto más nivel, la empresa soporta más riesgo de impago.
+  `descripcion` varchar(70) DEFAULT NULL, --descripción del nivel de riesgo de la forma de pago
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

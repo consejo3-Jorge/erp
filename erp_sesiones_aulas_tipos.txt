@@ -1,0 +1,15 @@
+/*Propósito de la tabla: contiene información sobre los tipos de aulas que hay*/
+
+CREATE TABLE `erp_sesiones_aulas_tipos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único que identifica el tipo de aula
+  `nombre` varchar(255) DEFAULT NULL,--nombre del tipo de aula
+  `instru_tutor` text DEFAULT NULL,--texto que contiene instrucciones del uso del aula dirigidas al tutor
+  `responsable` varchar(255) DEFAULT NULL,--indica el nombre del responsable del aula
+  `gotomeeting_clientid` varchar(255) DEFAULT NULL,--en desuso
+  `gotomeeting_data` text DEFAULT NULL,--en desuso
+  `gotomeeting_pass` varchar(255) DEFAULT NULL,--en desuso
+  `gotomeeting_secret_key` varchar(255) DEFAULT NULL,--en desuso
+  `gotomeeting_user` varchar(255) DEFAULT NULL,--en desuso
+  `obsoleta` smallint(6) NOT NULL DEFAULT 0,--indica si el tipo de aula está obsoleto (valor 1) o no (valor 0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

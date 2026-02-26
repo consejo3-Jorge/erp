@@ -1,0 +1,36 @@
+/*Propósito de la tabla: contiene los datos de las facturas emitidas a los clientes*/
+
+CREATE TABLE `facturas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, --identificador interno de la factura
+  `factu_id` varchar(40) DEFAULT NULL, -- núnmero de la factura
+  `fecha` date DEFAULT NULL, -- fecha de la factura
+  `cliid` int(10) unsigned NOT NULL DEFAULT 0, -- id del cliente
+  `matid` int(10) unsigned NOT NULL DEFAULT 0, -- ID la matrícula facturada, no se usa siempre porque a veces hay más de una matricula facturada en una factura
+  `remid` int(11) DEFAULT 0, -- ID de la remesa de matrículas facturada
+  `accfid` int(10) unsigned NOT NULL DEFAULT 0, -- id de la acción formativa facturada en la factura
+  `base` decimal(10,2) NOT NULL DEFAULT 0.00, -- importe base de la factura
+  `iva` decimal(10,2) NOT NULL DEFAULT 0.00, -- importe de IVA de la factura, no registra el porcentaje, registra el importe en euros que corresponden al IVA
+  `total` decimal(10,2) NOT NULL DEFAULT 0.00, -- importe total de la factura, resulta de sumar a la base el IVA, y restar el IRPF
+  `pagada` int(10) unsigned NOT NULL DEFAULT 0,  -- este campo está en desuso
+  `irpf` decimal(10,2) NOT NULL DEFAULT 0.00, -- importe neto que supone el IRPF de la factura
+  `vto` date DEFAULT NULL, -- campo en desuso
+  `factu_link` varchar(255) DEFAULT NULL, --enlace a la factura en formato PDF 
+  `inf_grupo` varchar(255) DEFAULT NULL, --enlace al documento "informe de grupo" si es que éste ha sido subido ya al sistema
+  `inf_boni` varchar(255) DEFAULT NULL, --enlace al documento "informe de bonificación" si es que éste ha sido subido ya al sistema
+  `esboni` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si la factura va ser bonificada (1) o no (0) 
+  `enviado_ib` int(11) DEFAULT 0, --inidica la fecha en formato unixtime de cuando se ha enviado al cliente el informe de bonificación. Si es 0 es que no se ha enviado
+  `enviada` date DEFAULT NULL, -- inidica si se ha enviado el documento de factura en PDF al cliente
+  `notas` text DEFAULT NULL, --campo de texto para que introduzcamos notas
+  `tramitacion` smallint(6) DEFAULT 0, --campo en desuso
+  `serie` int(11) DEFAULT 0, --indica el ID de la serie de facturas
+  `contabilizada` smallint(6) DEFAULT 0, --indica si la gestoría ha contabilizado o no la factura
+  `rectificativa` varchar(20) DEFAULT NULL, --indica si la factura es una factura rectificativa, pero está en desuso
+  `cancelar_recl_pagos` smallint(6) DEFAULT 0, --indica si esta factura se tiene en cuenta o no para efectuar un proceso automático para reclamar el pago al cliente
+  `ult_email_recl_pagos` int(11) DEFAULT 0, -- contiene un número entre 0 y 4 que indica en qué fase de reclamación de pagos estamos, cada fase tiene asociado una plantilla de email 
+  `ult_fecha_recl_pagos` int(11) DEFAULT 0, -- contiene la fecha en la que se reclamó al cliente el pago, mediante el envío de una plantilla de email
+  `incobrable` smallint(6) DEFAULT 0, --indica si la factura es incobrable (1) o es cobrable (0)
+  `infgrupo_recl` int(11) DEFAULT 0, --indica, en formato unixtime, en qué fecha se reclamó a la entidad organizadora que nos remita el informe de grupo
+  `fecha_imputacion` date DEFAULT NULL, -- indica la fecha en la que esta factura se tiene en cuenta para las comisiones de los comerciales 
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `I_facturas_factu_id` (`factu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7165 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

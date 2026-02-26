@@ -1,0 +1,17 @@
+/*Propósito de la tabla: contiene las distintas formas de pago por parte de los clientes*/
+CREATE TABLE `fpago` (
+  `fpagoid` int(10) unsigned NOT NULL AUTO_INCREMENT, -- id de la forma de pago
+  `cod` varchar(10) NOT NULL, --código de la forma de pago
+  `descri` varchar(45) NOT NULL, --descripción de la forma de pago
+  `vto` smallint(3) unsigned NOT NULL DEFAULT 0, --días a añadir al campo facturas.vto
+  `nv` smallint(1) unsigned NOT NULL DEFAULT 0, --contiene el nivel de riesgo de la forma de pago, a mayor valor, mayor riesgo
+  `mensualidades` smallint(6) DEFAULT 0, --indica si la forma de pago es una serie de mensualidades (1) o no (0)
+  `medio_pago` int(11) DEFAULT 0, --contiene el ID de los medios de pago, se relaciona con la tabla y campo erp_medios_de_pago.id
+  `nivel` smallint(6) DEFAULT 0, -- contiene el ID del nivel de forma de pago, se relaciona con la tabla erp_niveles_pago.id
+  `nombre_comercio` varchar(70) DEFAULT NULL, --para las formas de pago que usan una pasarela de pagos, contiene el nombre del comercio que haremos figurar
+  `fuc` varchar(50) DEFAULT NULL, --contiene información para el API o pasarela de pagos para cobros por tarjeta
+  `terminal` varchar(5) DEFAULT NULL, --contiene información para el API o pasarela de pagos para cobros por tarjeta
+  `moneda` varchar(5) DEFAULT NULL, --contiene información para el API o pasarela de pagos para cobros por tarjeta
+  `clave256` varchar(70) DEFAULT NULL, --contiene información para el API o pasarela de pagos para cobros por tarjeta
+  PRIMARY KEY (`fpagoid`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

@@ -1,0 +1,19 @@
+/*Propósito de la tabla: contiene información sobre las aulas en las que se desarrollan las sesiones presenciales*/
+
+CREATE TABLE `erp_sesiones_aulas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único que identifica el aula
+  `nombre` varchar(255) DEFAULT NULL,--nombre del aula
+  `dir` varchar(255) DEFAULT NULL,--dirección postal (o URL) del aula
+  `pob` varchar(255) DEFAULT NULL,--población en donde está el aula
+  `cp` varchar(5) DEFAULT NULL,--código postal en el que está el aula
+  `provid` int(11) DEFAULT 0,--código de la provincia en la que está el aula, se usan tablas estándar de provincias, por ejemplo, Madrid es 28
+  `capacidad_max` int(11) DEFAULT 0,--capacidad máxima de alumnos para este aula
+  `telepresencia` smallint(6) DEFAULT 0,--indica si el aula es telepresencial (valor 1) o es un áula física (valor 0)
+  `tipo` smallint(6) DEFAULT 0,--indica el tipo de aula, se relaciona con la tabla erp_sesiones_aulas_tipos.id
+  `instru_sala` text DEFAULT NULL,--no está claro su uso, pero puede usarse para guardar instrucciones de uso del aula y puede que las notas están en la tabla erp_textos
+  `coste_hora` decimal(10,2) DEFAULT 0.00,--indica el coste que tiene el aula para nuestro centro por cada hora
+  `coste_jornada` decimal(10,2) DEFAULT 0.00,--indica el coste que tiene el aula para nuestro centro por cada jornada
+  `notas` text DEFAULT NULL,--no está claro su uso, pero puede usarse para guardar notas aclaratorias sobre el aula y puede que las notas están en la tabla erp_textos
+  `cliente` int(11) DEFAULT 0,--si el aula es para uso exclusivo de un cliente, contendría el id del cliente. Se relaciona con el campo empresas.empid
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

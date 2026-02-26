@@ -1,0 +1,24 @@
+/*Propósito de la tabla: controlar la labor tutorial para las matrículas de acciones formativas que el tipo de venta es "bonificada"  */
+
+CREATE TABLE `tutorias` (
+  `matid` int(10) unsigned NOT NULL DEFAULT 0, -- id de la matrícula a la que se asocia el registro. Se relaciona con el campo matriculas.matid
+  `fase` int(10) unsigned NOT NULL DEFAULT 0, -- indica en qué fase de tutorización estamos: (1) Inicio (2) estudiando (3) finalizada
+  `valido_desde` date NOT NULL, -- la fecha en la que se establece desde cuándo es válida el seguimiento de la matrícula
+  `valido_hasta` date NOT NULL,-- la fecha en la que se establece hsata cuándo es válida el seguimiento de la matrícula
+  `proxima_veri` date NOT NULL, -- la fecha en la que se debe producir la próxima verificación de la marcha de la matrícula
+  `proximo_hito_veri` int(10) unsigned NOT NULL DEFAULT 0, -- inidica el % de curso en el que se realizará la próxima verificación. Valores: 25,50,75,100. En desuso
+  `progreso_real` int(10) unsigned NOT NULL DEFAULT 0, -- o no se sabe su uso o está en desuso
+  `proyecto` int(10) unsigned NOT NULL DEFAULT 0, -- o no se sabe su uso o está en desuso
+  `acuse` int(10) unsigned NOT NULL DEFAULT 0, -- o no se sabe su uso o está en desuso
+  `etiq_libro` int(10) unsigned NOT NULL DEFAULT 0, -- o no se sabe su uso o está en desuso
+  `etiq_titulo` int(10) unsigned NOT NULL DEFAULT 0, -- o no se sabe su uso o está en desuso
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, se desconoce su uso
+  `proy_x` smallint(5) unsigned NOT NULL DEFAULT 0, -campo de uso reservado y secreto
+  `proy_x_tareas_quiz` smallint(6) DEFAULT 0, -campo de uso reservado y secreto
+  `tutoriza_desde` datetime DEFAULT NULL, -- se usa para restringir la labor de seguimiento sobre la matrícula. Inicialmente tiene la fecha de inicio  de la matrícula, pero si se quiere suspender hasta una fecha dada, se indica aquí la fecha en la que se reanuda el seguimiento
+  `progreso_auto` decimal(10,2) NOT NULL DEFAULT 0.00, --un sistema de tareas nocturnas, estudia el progreso del alumno en el campus y rellena este campo con la estimación del porcentaje de los estudios que lleva realizados el alumno
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Index_2` (`matid`)
+) ENGINE=InnoDB AUTO_INCREMENT=41412 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

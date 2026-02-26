@@ -1,0 +1,10 @@
+***********************************************************************************************************************************
+Función pte_ftra(factu_id,tipo, cliid)
+Uso: Te devuelve la cantidad pendiente de pagar de una factura emitida o recibida. Si el importe devuelto es igual a 0 quiere decir que la factura esta pagada.
+
+Parámetros:
+Tipo (1=recibidas, 2=emitidas)
+factu_id : nº de factura con prefijo incluido. Por ejemplo 'G-130000000897'
+tipo: (debe/haber o factura emitida/recibida) si es igual a 1 es 'debe' es decir facturas recibidas (de proveedores) si es igual a 2 es 'haber' es decir facturas emitidas (a clientes)
+
+***********************************************************************************************************************************

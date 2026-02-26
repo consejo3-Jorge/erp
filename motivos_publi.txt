@@ -1,0 +1,9 @@
+/*Propósito de la tabla: Contiene los estados en los que se puede encontrar un curso de cara a la publicidad o promoción que hace la empresa*/
+
+CREATE TABLE `motivos_publi` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,--id único del tipo de publicidad
+  `motivo` varchar(255) NOT NULL,--nombre descriptivo del tipo de publicidad que se hace
+  `publi` smallint(5) unsigned NOT NULL DEFAULT 1,--indica si este estado de publicidad implica que el curso sea visible en acciones publicitables (valor 1) o por el contrario no se hace ningún tipo de acción sobre él, es decir como si no existiera el curso (valor 0)
+  `exportable` smallint(6) DEFAULT 1,-- algunos procesos de exportar que tiene el aplicativo de gestión, miran este campo para saber si deben exporta el curso (valor 1) o no lo deben exportar (valor 0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

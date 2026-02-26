@@ -1,0 +1,14 @@
+/*Propósito de la tabla: Contiene los datos de los documentos que conforman el sistema de gestión de calidad de la empresa, basado en ISO 9001*/
+
+CREATE TABLE `erp_calidad_documentos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo documento', --contien el ID único de cada documento
+  `iddoc` int(11) DEFAULT 0 COMMENT 'Nro. documento', -- se desconoce su utilidad
+  `tipo_doc` int(11) DEFAULT 0 COMMENT 'Nro. Tipo de documento',--indica qué tipo de documento es, se relaciona con el campo select * from erp_calidad_tipos_documentos.id
+  `nombre` varchar(70) DEFAULT NULL COMMENT 'Nombre',--nombre del documento
+  `codificacion` varchar(30) DEFAULT NULL COMMENT 'Codificación',-- codigo del documento, un ejemplo de formato es IT-FP06-MP-01, IT indica el tipo de documento que es una Instrucción de trabajo, FP06 indica que corresponde a la ficha de proceso 06, MP-01 es fijo
+  `Obsoleto` smallint(6) DEFAULT 0 COMMENT '1=Obsoleto, 0=Vigente ',--indica si el documento es obsoleto (1) o vigente (0)
+  `url` varchar(255) DEFAULT NULL COMMENT 'URL del documento',--contiene la URL al documento
+  `descripcion` int(11) DEFAULT 0,--contiene una descripción de para qué sirve el documento. La descripción está en la tabla erp_textos por lo que se accede a ellas mediante el campo erp_textos.id
+  `open_nueva_ventana` smallint(6) DEFAULT 0,--indica si el documento se debe de abrir en una nueva ventana del navegador (1) o en un marco (0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

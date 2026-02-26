@@ -1,0 +1,5 @@
+Función pte_mov(idmov)
+Uso: Te devuelve la cantidad pendiente de un movimiento pendiente de asignar a una o varias facturas. Si el importe devuelto es igual a 0 quiere decir que todo el importe del movimiento ya se ha asociado a una o varias facturas.
+
+Parámetros:
+idmov: id del movimiento de la tabla erp_tesoreria_movimientos.

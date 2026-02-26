@@ -1,0 +1,50 @@
+FUNCTION vyv_3.calc_coste_curso(_curso INT, _tarifa INT,_cliente INT, _EO SMALLINT)
+  RETURNS decimal(10,2)
+BEGIN
+  DECLARE tarifa_defecto INT(10) DEFAULT 0; /* tarifa por defecto en parametros generales */
+  DECLARE iva DECIMAL(10,2) DEFAULT 0;      /* iva general en parametros generales */
+  DECLARE ivar DECIMAL(10,2) DEFAULT 0;     /* iva superreducido en parametros generales */
+  DECLARE coste DECIMAL(10,2) DEFAULT 0;    /* variable a devolver */
+  DECLARE manual INT(6) DEFAULT 0;          /* si tiene manual impreso en aux_cursos */
+  DECLARE clicencia DECIMAL(10,2) DEFAULT 0;/* coste_licencia en aux_cursos */
+  DECLARE clibros DECIMAL(10,2) DEFAULT 0;  /* coste libros en aux_cursos */
+  DECLARE hdist INT(10) DEFAULT 0;          /* horas_dist en aux_cursos */
+  DECLARE libros_tarifa INT(6) DEFAULT 0;   /* si usa libros en tarifa */
+  DECLARE portes DECIMAL(10,2);             /* sumatorio de costes_portes_compra + coste_portes_venta */
+  DECLARE margenEO DECIMAL(10,2) DEFAULT 0; /* margen que se lleva la Entidad Organizadora en euros */
+  /* leemos varibles de parametros generales */
+  SELECT tarifa_cursos_defecto,iva_general/100,iva_superreducido/100,coste_portes_compra+coste_portes_venta FROM datgen WHERE datgenid='1'
+    INTO tarifa_defecto,iva,ivar,portes;
+  /* si no tenemos tarifa usamos la tarifa por defecto en parametros generales */
+  IF _tarifa=0 or isnull(_tarifa) THEN 
+    SET _tarifa=tarifa_defecto; 
+  END IF;
+  /* leemos variables de aux_cursos y si tiene libros en tarifa */
+  SELECT manual_impreso,coste_licencia,coste_libros,horas_dist, (select libros from erp_cursos_tarifas where id=_tarifa) from aux_cursos where cursoid=_curso
+    INTO manual,clicencia,clibros,hdist,libros_tarifa;
+  /* Inicializamos coste al coste de licencia */
+  SET coste = clicencia + (clicencia * iva);
+  
+  IF manual=1 AND libros_tarifa=1 THEN
+    /* Si tiene manual_impreso y libros en tarifa añadimos al coste el coste de libros + iva reducido + portes + iva*/
+    SET coste = coste + (clibros + (clibros*ivar));
+    SET coste = coste + (portes + (portes*iva));
+  ELSE
+    IF hdist>0 THEN
+      /* Si es a distancia añadimos al coste los portes + iva aunque no tenga libros */
+      SET coste = coste + (portes + (portes*iva));
+    END IF;
+  END IF;
+  IF NOT (_EO=0 OR isnull(_EO) AND _EO>0) THEN
+    /* si hay EO leemos el margen de la EO en euros con relacion al pvp del curso*/
+    select ((calc_pvp_curso(_curso,_tarifa,_cliente)*margen_tramitacion)/100) from entidades_organizadoras where id=_EO
+      INTO margenEO;
+    IF NOT (margenEO=0 OR isnull(margenEO) AND margenEO>0) THEN
+      /* añadimos al coste el margen de la EO + iva */
+      SET coste = coste + (margenEO +(margenEO*iva));
+    END IF;
+  END IF;
+  /* devolvemos el coste resultante */
+
+  RETURN coste;
+END

@@ -1,0 +1,24 @@
+/*Propósito de la tabla: contiene los datos de las facturas recibidas de nuestros proveedores y colaboradores, así como en general todo documento que sustente un gasto para la empresa*/
+
+CREATE TABLE `erp_facturas_recibidas` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,--id interno único de cada factura o gasto recibido
+  `proveid` int(11) DEFAULT 0,--id del proveedor de la factura o documento. Se relaciona con la tabla proves.proveid
+  `factu_id` varchar(40) DEFAULT NULL,--número que le da a la factura el proveedor
+  `factu_fecha` int(11) DEFAULT 0,--fecha de la factura en formato unix_timestamp
+  `base` decimal(10,2) DEFAULT 0.00,--importe base de la factura. En euros
+  `iva` decimal(10,2) DEFAULT 0.00,--importe del IVA de la factura en euros
+  `otros_cargos` decimal(10,2) DEFAULT 0.00,--importe de otros cargos de la factura, como suplidos, etc.
+  `irpf` decimal(10,2) DEFAULT 0.00,--importe de IRPF retenido en la factura, en euros
+  `total` decimal(10,2) DEFAULT 0.00,--total de la factura en euros. El total se ha calculado así: total=base+suplidos+iva-irpf
+  `factu_link` varchar(255) DEFAULT NULL,--enlace a la factura en PDF que reside en el servidor. Normalmente el enlace será algo así: "documentos/facturas/recibidas/ftra_recibida_2.pdf"
+  `factu_notas` text DEFAULT NULL,--notas en texto que acompañan a la factura. Las notas pueden contener diversa información. Normalmente como mínimo contienen una especie de etiqueta entre los caracteres "/*" para abrir y "*/" para cerrar. Esta etiqueta hace referecia a qué tipo de gasto corresponde, de forma que ayuda en una suerte de contabilidad analítica.
+  `confor1_fecha` int(11) DEFAULT 0,--fecha en que ha sido conformada la factura, la fecha se guarda en formato unix_timestamp
+  `confor1_user` int(11) DEFAULT 0,-id del usuario que ha conformado la factura, se relaciona con la tabla users.userid
+  `confor_resp` int(11) DEFAULT 0,--id del usuario que es responsable de conformar la factura, se relaciona con la tabla users.userid
+  `confor_notas` text DEFAULT NULL,--notas en text que puede introducir el usuario para comentar cualquier aclaración al conformar la factura
+  `visto_bueno_fecha` int(11) DEFAULT 0,-fecha en la que se ha dado el visto bueno a la factura recibida, la fecha se guarda en formato unix_timestamp
+  `visto_bueno_user` int(11) DEFAULT 0,--id del usuario que ha dado el visto bueno a la factura recibida. se relaciona con la tabla users.userid.
+  `contabilizada` smallint(6) DEFAULT 0,--indica si la gestoría ha contabilizado la factura (valor 1) o no la ha contabilizado todavía (valor 0)
+  `fecha_imputacion` date DEFAULT NULL,--es un campo auxiliar que se usa si a la hora de imputar el coste de la factura, deseamos que tenga una fecha de imputación distinta a la de la fecha de la factura. La fecha se guarda en formato aaaa-mm-dd
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5113 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

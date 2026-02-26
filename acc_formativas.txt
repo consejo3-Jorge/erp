@@ -1,0 +1,58 @@
+/*Propósito de la tabla: contiene las acciones formativas que se han impartido o se van a impartir*/
+
+CREATE TABLE `acc_formativas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, -- id interno de la acción formativa
+  `accfid` varchar(20) NOT NULL, --número de la acción formativa. Normalmente es el que se comunica a FUNDAE
+  `cursoid` bigint(10) unsigned NOT NULL DEFAULT 0, --id del curso que se imparte
+  `horas` int(10) unsigned NOT NULL DEFAULT 0, -- número total de horas, realmente este campo no se usa
+  `fecini` date DEFAULT NULL, -- fecha de inicio de la acción formativa en formato "date" es decir yyyy/mm/ddd
+  `fecfin` date DEFAULT NULL, -- fecha de fin de la acción formativa en formato "date" es decir yyyy/mm/ddd
+  `anced` date DEFAULT NULL, -- indica la fecha en la que se comunica a ANCYPEL la acción formativa en formato "date" es decir yyyy/mm/ddd
+  `terminada` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si para la acción formativa ya están terminados todos los trámites, pero atención, no significa que la acción formativa esté terminada, solo se puede saber si una acción formativa está vigente o terminada por sus campos acc_formativa.fecini y acc_formativa.fecfin
+  `facturada` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si la acción formativa ya ha sido facturada a los clientes
+  `cobrada` smallint(5) unsigned NOT NULL DEFAULT 0, -- inidica si la acción formativa ha sido cobrada, pero realmente está en desuso.
+  `tp_factu` smallint(5) unsigned NOT NULL DEFAULT 1, -- inidica si esta acción formativa va a ser bonificada (2=Bonificada, 3=No bonificada)
+  `grupo` varchar(10) DEFAULT NULL, -- inidica el número de grupo de la acción formativa
+  `vto_factu` smallint(3) unsigned DEFAULT 0, -- en desuso
+  `link_autorizacion` varchar(128) DEFAULT NULL, --contiene el enlace al fichero que contiene el PDF con la aprobación de FUNDAE 
+  `notas` text DEFAULT NULL, --contiene en texto anotaciones aclaratorias
+  `horario` text DEFAULT NULL, --contiene el horario en el que se desarrolla la acción formativa. Generalmente en desuso
+  `envio_email` tinyint(4) DEFAULT 1, --indica si la esta acción formativa a los alumnos se les envían comunicaciones por email (1) o no (0)
+  `envio_sms` tinyint(4) DEFAULT 1,  --indica si la esta acción formativa a los alumnos se les envían comunicaciones por SMS (1) o no (0)
+  `aprobada` smallint(5) unsigned DEFAULT 0, --
+  `eo` int(11) DEFAULT NULL, -- indica el ID de la entidad organizadora que se va a usar
+  `facturable` smallint(6) DEFAULT 1, -- indica si la acción formativa es facturable (1) o no es facturable (0)
+  `id_trami` int(11) DEFAULT 0, -- en desuso
+  `lugar_imparticion` text DEFAULT NULL, -- inidica la dirección donde se impartira la acción formativa
+  `auto_factura` tinyint(4) DEFAULT 1, -- indica si la acción formativa se autofacturará por la noche (1) o no se tiene que facturar manualmente (0)
+  `horas_tele` smallint(6) DEFAULT 0, --indica el número de horas de teleformación, es decir, elearning, de que consta la acción formativa.
+  `horas_dist` smallint(6) DEFAULT 0, --indica el número de horas de formación a distancia, es decir, se envían los libros por correo postarl, de que consta la acción formativa.
+  `horas_pres` smallint(6) DEFAULT 0, --indica el número de horas de formación presencial o formación en directo tipo Meet,es decir, con un tutor en directo de que consta la acción formativa.
+  `notas_factu` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en la facturación. Las notas están en la tabla erp_textos
+  `notas_compra` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en el proceso de compras de materiales. Las notas están en la tabla erp_textos
+  `notas_tutoria` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en el proceso de tutorización. Las notas están en la tabla erp_textos
+  `notas_trami` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en la tramitación administrativa. Las notas están en la tabla erp_textos
+  `notas_almacen` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en los envíos de almacén. Las notas están en la tabla erp_textos
+  `notas_eo` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta a comunicar a la entidad organizadora. Las notas están en la tabla erp_textos
+  `tutor` int(11) DEFAULT 0, -- contiene el ID del tutor principal que imparte la acción formativa. MUY IMPORTANTE: Se relaciona con la tabla y campo users.user_mdl y no con el campo users.userid
+  `tutor_l1` int(11) DEFAULT 0, -- contiene el ID del tutor que atiende en primera instancia los mensajes de los alumnos. Se relaciona con la tabla y campo users.user_mdl
+  `liquidacion` int(11) DEFAULT 0, -- contiene el ID del registro de liquidación del sistema de pago a los formadores. Se relaciona con la tabla y campo erp_liquidaciones.id
+  `envio_sms_ses_presenciales_tutor` smallint(6) DEFAULT 1,  --indica si la esta acción formativa al tutor se les envían comunicaciones por SMS sobre las sesiones presenciales (1) o no (0)
+  `envio_emails_ses_presenciales_tutor` smallint(6) DEFAULT 1, --indica si la esta acción formativa al tutor se les envían comunicaciones por email sobre las sesiones presenciales (1) o no (0)
+  `es_itinerario` smallint(6) DEFAULT 0, -- indica si esta acción formativa es un itinerario formativo, es decir, es la acción formativa principal o de cabecera de varias que conforman un plan de estudios concreto o itinerario formativo
+  `es_asignatura` smallint(6) DEFAULT 0, -- indica si esta acción formativa es una asignatura de un itinerario formativo, es decir, es acción formativa dependiente de otra principal 
+  `orden` int(11) DEFAULT 0, -- en caso de ser una acción formativa "asignatura" indica el orden que ocupa esta acción formativa, que se comporta como asignatura, dentro del itinerario formativo
+  `itinerario` int(11) DEFAULT 0, -- En caso de que la acción formativa sea una "asignatura", indica el ID de la acción formativa que es la cabecera del itinerario formativo
+  `facturar_ini_fin` smallint(6) DEFAULT 2 COMMENT '1=>Inicio, 2=>fin', -- indica si la acción formativa se debe facturar al inicio (1) o al finalizar (2)
+  `bloquear_propuesta_sesiones` smallint(6) DEFAULT 0, --en caso de que la acción formativa tenga sesiones presenciales, indica si los alumnos pueden proponer días y horas para nuevas sesiones (1) o no pueden (0)
+  `seguimiento_especial` int(11) DEFAULT 0, -- indica si para esta acción formativa es necesario realizar un seguimiento especial y más intenso (1) o se hace un seguimiento normal (0)
+  `get_datosaf` int(11) DEFAULT 0, -- se desconoce su uso
+  `envio_email_aviso_presencial` smallint(6) DEFAULT 0, -- indica si ya se han enviado a los tutores y alumnos los correos y/o SMS avisando de que participan en una acción formativa que es total o parcialmente presencial
+  `acciones_termino` smallint(6) DEFAULT 0, --se desconoce uso exacto pero parece que está en (1) si hemos dato por terminada la acción formativa
+  `auto_matricular` smallint(6) DEFAULT 0, -- indica si dejamos que el cliente pueda automatricular a alumnos mediante la web área de clientes
+  `auto_borrar` smallint(6) DEFAULT 0,  -- indica si dejamos que el cliente pueda borrar a alumnos mediante la web área de clientes
+  `proyx_tutor` smallint(6) DEFAULT 0, --se desconoce su uso
+  PRIMARY KEY (`id`),
+  KEY `Index_accfid` (`accfid`),
+  KEY `Index_cursoid` (`cursoid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10261 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

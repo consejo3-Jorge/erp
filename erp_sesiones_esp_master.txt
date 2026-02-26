@@ -1,0 +1,15 @@
+/*Propósito de la tabla: cuando una sesión presencial es considera especial, se usa esta tabla para registrar información*/
+
+CREATE TABLE `erp_sesiones_esp_master` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único que identifica este contenedor de información de la sesión especial
+  `venta_detalle` int(11) DEFAULT 0,--indica a qué detalle de venta está asociada esta información de sesión especial. Se relaciona con la tabla erp_ventas_detalle.id
+  `horas` decimal(10,2) DEFAULT 0.00,--indica el volumen de horas de formación para esta sesión especial
+  `pvp` decimal(10,2) DEFAULT 0.00,--indica a qué precio vamos a facturar esta sesión especial al cliente. Puede ser 0€
+  `coste_colectiva` decimal(10,2) DEFAULT 0.00,--en caso de estar asociada a una sesión presencial colectiva, indica el coste hora a pagar al formador
+  `coste_individual` decimal(10,2) DEFAULT 0.00--en caso de estar asociada a una sesión presencial individual, indica el coste hora a pagar al formador
+  `telepresencia` smallint(6) DEFAULT 0,--en caso de ser sesiones telepresenciales contiene valor 1, si no es telepresencial contiene valor 0
+  `procesada` smallint(6) DEFAULT 0,--las sesiones especiales para estar operativas para los alumnos deben ser procesadas. Este campo indica si ha sido procesada (valor 1) o no (valor 0)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+
+

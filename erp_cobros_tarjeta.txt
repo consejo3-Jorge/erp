@@ -1,0 +1,16 @@
+/*Propósito de la tabla: contiene las solicitudes de cobro por tarjeta que se envían a los clientes. Además esta tabla controla si efectivamente el cliente ha efectuado el pago por tarjeta*/
+
+CREATE TABLE `erp_cobros_tarjeta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, --id único que identifica la solicitud de cobro por tarjeta
+  `empid` int(11) DEFAULT 0, -- id del cliente al que se solicita el pago. Puede estar a 0, lo que indica que se está pidiendo el pago a un alumno y no a una empresa o particular cliente
+  `concepto` text DEFAULT NULL, -- El concepto que figura en la solicitud de cobro que se envía por email al cliente o alumno
+  `importe` decimal(10,2) DEFAULT 0.00, -- el importe del que se solicita el pago por tarjeta
+  `moneda` int(11) DEFAULT 978, -- código numérico de la moneda dentro de la tabla ISO 4217. Por ejemploi, el euro es el id 978
+  `cobrado` int(11) DEFAULT 0, -- Si se ha pagado mediante tarjeta figura la fecha en la que se logra el cobro en formato unix timestamp. Si está a 0 es que está sin cobrar
+  `fec_ult_email` int(11) DEFAULT 0, -- fecha en la que se ha enviado el último email al alumno solicitando que haga el pago por tarjeta en formato unix timestamp
+  `cl` varchar(255) DEFAULT NULL, --no está claro su uso pero probablemente recoge algún tipo de hash usado con la pasarela de pagos del banco
+  `nombre` varchar(255) DEFAULT NULL, --cuando empid = 0 entonces contiene el nombre del alumno al que se solicita el pago
+  `email` varchar(255) DEFAULT NULL, -- cuando empid = 0 entonces contiene el email del alumno al que se solicita el pago
+  `intento` int(11) DEFAULT 0, -- indica el número de veces que se ha enviado el email solicitando el pago al cliente o alumno
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2235 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
