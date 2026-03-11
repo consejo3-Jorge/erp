@@ -1,0 +1,35 @@
+/*Propósito de la tabla: contiene las cabeceras de un sistema de tickets usado para gestionar las oportunidades comerciales (CRM) y las relaciones con los alumnos*/
+
+CREATE TABLE `crm` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,--id único del ticket
+  `user` int(10) unsigned NOT NULL,--indica el id del usuario que ha abierto el ticket. Se relaciona con el campo users.userid
+  `user_padre` int(10) unsigned NOT NULL DEFAULT 1,--se desconoce el uso de este campo
+  `campid` int(10) unsigned NOT NULL DEFAULT 0,--en caso de que el registro corresponda a una acción comercial, indica el ID de la campaña de marketing que originó la oportunidad comercial. Se relaciona con el campo campanias.id
+  `empid` int(10) unsigned NOT NULL DEFAULT 0,--indica con qué empresa está relacionado este registro, se relaciona con el campo empresas.empid
+  `tipo` int(10) unsigned NOT NULL DEFAULT 0,--indica el tipo de registro y uso, puede ser uno de estos valores (0=no se sabe, 1=apuntes internos, 2=apuntes sobre matrículas de alumnos, 3=puramente comercial es decir CRM puro, 4=apuntes internos de las acciones formativas, 7=sistema de tickets entre alumnos y tutores
+  `asunto` varchar(80) NOT NULL,--contiene en texto el asunto sobre el que versa este registro
+  `estado` int(10) unsigned NOT NULL DEFAULT 0,--contiene el estado abierto/cerrado del ticket/crm (1=abierto, 0=cerrado)
+  `fecini` datetime DEFAULT NULL,--fecha en la que se ha creado el registros en formato aaaa/mm/dd 
+  `proxima` datetime DEFAULT NULL,--fecha en la que se ha acordado contactar con el cliente / alumno en formato aaaa/mm/dd. Si no hay fecha acordada para próximo contacto, contiene NULL
+  `notas` text DEFAULT NULL,--contiene notas y explicaciones
+  `matid` int(10) unsigned NOT NULL DEFAULT 0,--en caso estar relacionado este registro con una matrícula, contiene el id de la matrícula, es decir, se relaciona con el campo matriculas.matid
+  `accfid` int(10) unsigned NOT NULL DEFAULT 0,--en caso estar relacionado este registro con una acción formativas, contiene el id de la acción formativa, es decir, se relaciona con el campo acc_formativas.id
+  `cursoid` int(10) unsigned NOT NULL DEFAULT 0,--en caso estar relacionado este registro con un curso, contiene el id del curso, es decir, se relaciona con el aux_cursos.cursoid
+  `alumno` int(10) unsigned NOT NULL DEFAULT 0,--en caso estar relacionado este registro con un alumno, contiene el id del usuario de Moodle que corresponde al alumno, es decir, se relaciona con una tabla de otra base de datos distinta, la de Moodle: visionyvalor.mdl_user.id
+  `hora_llamada` varchar(12) DEFAULT '0',--en caso de haber quedado en contactar en un rago de horas determinadas, en formato hh:mm/hh:mm es decir horas desde / hora hasta
+  `id_motivo` int(10) unsigned NOT NULL DEFAULT 0,--cuando se cierra un CRM puede contener el motivo por el que se cierra. La lista de motivos está en la tabla -motivos- y este campo se relaciona con el campo motivos.id
+  `situacion` int(10) NOT NULL DEFAULT -1,--indica la situación de -temperatura- de la oportunidad con el cliente, puede ser uno de estos valores: -1:en blanco 0:no hay seleccionada ninguna 1:Frio 2:Templado 3:Caliente 4:Esperando documentación para formalizar operación
+  `cuponid` int(10) unsigned NOT NULL DEFAULT 0,--en caso de que este CRM provenga de una oportunidad comercial originada por un cupon o lead, contiene el id del cupón. Se relaciona con la tabla cupones_nulos.id
+  `trami` int(11) DEFAULT 0,--se desconoce su uso
+  `destinatario` int(11) DEFAULT 0,--no está muy claro su uso, pero en caso de que el ticket sea un mensaje, podría contener el ID del destinatario, que correspondería con el id del usuario en Moodle.
+  `area` smallint(6) DEFAULT 0,--en caso de ser un ticket de alumno indica el área de la consulta que realiza el alumno (1=asistencia en general, 2=Duda sobre el contenido)
+  `liquidacion` int(11) DEFAULT 0,--en caso de ser un ticket de consulta de alumno y si la ha resuelto un tutor y hay que pagar al tutor por ello, contiene el ID del registro del sistema de liquidaciones a tutores. Se relaciona con el campo erp_liquidaciones.id
+  `talentoid` int(11) DEFAULT 0,--se desconoce su uso
+  `administativo` smallint(6) DEFAULT 0,--se desconoce su uso
+  `oldasunto` text DEFAULT NULL,-- no está claro su uso, pero parece que en caso de cambiar el asunto del CRM algunos procesos registran en este camp el asunto anterior
+  `ult_actu_proxima` int(11) DEFAULT 0,--se desconoce su uso
+  `tutor` int(11) DEFAULT 0,--contiene el id del usuario de Moodle que corresponde con el tutor del alumno para la matrícula asociada a este ticket, pero en realidad se desconoce su uso
+  PRIMARY KEY (`id`),
+  KEY `i_empid` (`empid`),
+  KEY `i_user` (`user`)
+) ENGINE=InnoDB AUTO_INCREMENT=632883 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;

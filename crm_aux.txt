@@ -1,0 +1,8 @@
+/*Propósito de la tabla: es una tabla de apoyo al sistema de CRM para comerciales para registrar datos adicionales */
+
+CREATE TABLE `crm_aux` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--identificador único del registro.
+  `crmid` int(11) DEFAULT 0,--indica a que registro de actuacióin del CRM se asocia, por lo tanto se relaciona con el campo crmd.crmdid
+  `valoracion_economica` decimal(10,2) DEFAULT 0.00,--contiene el importe que espera facturar el comercial con la operación en caso de éxito.
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2937 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

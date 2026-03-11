@@ -1,0 +1,17 @@
+/*Propósito de la tabla: Tabla auxiliar de crmd (detalle crm) para el alta de ACCIONES en el Cockpit comercial (envios email, llamadas tfno, etc) */
+
+CREATE TABLE `crmd_aux` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, -- id único que identifica el registro
+  `crmdid` int(10) DEFAULT 0, -- indica el id del registro de la tabla crmd (Detalle CRM) con el que está asociado. Está relacionado por tanto con el campo crmd.id
+  `aviso_email` int(11) DEFAULT 0, -- si=1 quiere que se le avise al comercial por email
+  `aviso_sms` int(11) DEFAULT 0, -- si=1 quiere que se le avise al comercial por sms
+  `situ` smallint(6) DEFAULT 0, -- si=0 obsoleto
+  `resuelto` int(11) DEFAULT 0, -- si=1 resuleto (actualmente campo en desuso)
+  `resuelto_crmdid` int(11) DEFAULT 0, --si=1 crmd completo resuelto (actualmente campo en desuso)
+  `cancelado` int(11) DEFAULT 0, -- si=1 cancelado (actualmente campo en desuso)
+  `cancelado_motivo` varchar(255) DEFAULT NULL, -- si cancelado, motivo de cancelacion
+  `pospuesto_de` int(11) DEFAULT 0, -- si la acción con el cliente ha sido pospuesta a otro momento, contiene el crmd_aux.id del registro del que ha sido pospuesto
+  `pospuesto_a` int(11) DEFAULT 0, -- si la acción con el cliente se pospone, indica el crmd_aux.id del registro al que se pospone
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_crmd_aux_crmdid` (`crmdid`)
+) ENGINE=InnoDB AUTO_INCREMENT=95067 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;

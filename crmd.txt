@@ -1,0 +1,29 @@
+/*Propósito de la tabla: contiene todos los registros de actuaciones realizadas en el el sistema de CRM/TICKETS y se relaciona con la tabla CRM*/
+
+CREATE TABLE `crmd` (
+  `id` int(10) unsigned NOT NULL,--contiene el ID del CRM al que pertenece esta actuación. Se relaciona por tanto con el campo crm.id
+  `tipo` varchar(45) DEFAULT NULL,-- puede contener estos valores: 'Saliente'=corresponden a un correo o mensaje saliente. 'Anotacion'=es una anotación de texto. 'nota'=es es una anotación de texto. '7'=son notas de un ticket de consulta de alumno. 'Entrante'=Es un mensaje entranta de un alumno 'ACCION'=es una acción manual que ha hecho el comercial
+  `user` int(10) NOT NULL,--indica el usuario que ha realizado la actuación
+  `sujeto` varchar(128) DEFAULT NULL,--guarda información del sujeto sobre el que se realiza la acción, pero no está nada claro para qué se usa este campo. Se desconoce su uso
+  `canal` varchar(45) DEFAULT NULL,--indica el canal por el que se ha producido la actuación, puede ser uno de estos: E-Mail,ALARMA,INFO,LLamada Tfno.,APUNTE,SMS,LLamada Tfno.B,CONSULTA,ACCION. (Además cuando es acción es probable que esté relacionado con actuaciones en el Cockpit comercial)
+  `asunto_crmd` varchar(255) DEFAULT NULL,--es como un resumen en una línea de texto del motivo del que trata esta actuación.
+  `fec` datetime NOT NULL,--fecha y hora en la que se ha producido la actuación en formato aaaa-mm-dd hh:mm:ss
+  `result` int(10) NOT NULL DEFAULT 0,--indica el resultado de la actuación, el detalle de los resultados está en la tabla -resultados- por lo que se relaciona con esta tabla mediante el camp resultados.id
+  `mod_email` int(10) DEFAULT 0,--en caso que el registros corresponde a una actuación del envío de un email, puede contener el ID del modelo de email enviado, por lo que se relaciona con la tabla emails.id
+  `notas_crmd` text DEFAULT NULL,--contiene notas de la actuación. Cuando el campo crmd.canal=CONSULTA contiene el cuerpo del mensaje intercambiado entre alumno y tutor.
+  `autman` int(10) NOT NULL DEFAULT 1,--indica si la actuación corresponde a una acción automática del sistema o es realizada manualmente por un usuario. 1=automática, 2=manual
+  `subtipo` varchar(45) DEFAULT NULL,--contiene el tipo de acción realizada, puede ser uno de estos valores:  tfno,email,txt,SMS
+  `crmdid` int(10) unsigned NOT NULL AUTO_INCREMENT,--es el ID único del registro de la tabla crmd que identifica la actuación, es el campo clave
+  `crmd_link` text DEFAULT NULL,--puede contener un archivo asociado a la actuación, con una ruta de nuestro servicor, por ejemplo: /usr/home/visionyvalor/www/recursos/admin/documentos/ficheros_crm/2304812.html
+  `hilo_email` int(10) NOT NULL DEFAULT 0,--se desconoce su uso
+  `orden_hilo` int(10) NOT NULL DEFAULT 0,--se desconoce su uso
+  `temarios` text DEFAULT NULL,--en caso de que la actuación corresponda con una acción comercial CRM, si se ha enviado un temario de un curso, contiene el ID del temario del curso. Es más que probable que el registro CRM al que pertenece este registros de actuación, tenga asociado a la vez un id de un cupón o lead
+  `destinatario` varchar(255) DEFAULT NULL,--contiene datos del destinatario de la actuación, un valor de ejemplo es: '934527115@@Ester Villanueva@@Principal - Tfno. 1@@pr_tfno1'. No está claro su uso pero seguramente tenga que ver con el cockpit comercial
+  `leido` smallint(6) DEFAULT 0,--para las actuaciones que corresponden a consultas de alumno (canal=CONSULTA) indica si el destinatario ha leído el mensaje o no (1=leído, 0=pendiente de lectura).
+  PRIMARY KEY (`crmdid`),
+  UNIQUE KEY `ux_crmd_crmdid` (`crmdid`),
+  KEY `I_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2307387 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
+
+
+934527115@@Ester Villanueva@@Principal - Tfno. 1@@pr_tfno1
