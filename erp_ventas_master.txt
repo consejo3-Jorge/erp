@@ -1,0 +1,17 @@
+/*Propósito de la tabla: contiene las cabeceras de las declaraciones de ventas en el aplicativo. De aquí sacan la información los procesos de creación de matrículas y acciones formativas*/
+
+CREATE TABLE `erp_ventas_master` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente` int(11) DEFAULT 0,
+  `comercial` int(11) DEFAULT 0,
+  `fecha` int(11) DEFAULT NULL,
+  `tramitada` tinyint(4) DEFAULT 0,
+  `estado` int(11) DEFAULT 0,
+  `confirmada` smallint(6) DEFAULT 0,
+  `sig_curso` smallint(6) DEFAULT 1,
+  `origen` int(11) DEFAULT 0,
+  `recurrencia` smallint(6) DEFAULT 0,
+  `crm_origen` int(11) DEFAULT 0,
+  `es_sesion` smallint(6) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5807 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
