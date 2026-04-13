@@ -1,17 +1,17 @@
 /*Propósito de la tabla: contiene las cabeceras de las declaraciones de ventas en el aplicativo. De aquí sacan la información los procesos de creación de matrículas y acciones formativas*/
 
 CREATE TABLE `erp_ventas_master` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cliente` int(11) DEFAULT 0,
-  `comercial` int(11) DEFAULT 0,
-  `fecha` int(11) DEFAULT NULL,
-  `tramitada` tinyint(4) DEFAULT 0,
-  `estado` int(11) DEFAULT 0,
-  `confirmada` smallint(6) DEFAULT 0,
-  `sig_curso` smallint(6) DEFAULT 1,
-  `origen` int(11) DEFAULT 0,
-  `recurrencia` smallint(6) DEFAULT 0,
-  `crm_origen` int(11) DEFAULT 0,
-  `es_sesion` smallint(6) DEFAULT 0,
+  `id` int(11) NOT NULL AUTO_INCREMENT,--ID único que identifica el registro master de la venta
+  `cliente` int(11) DEFAULT 0,--ID del cliente, se relaciona con el campo empresas.empid
+  `comercial` int(11) DEFAULT 0,--id del comercial que ha declarado la venta, se relaciona con el campo users.userid
+  `fecha` int(11) DEFAULT NULL,--fecha en la que se graba el registro, en formato unix_timestamp
+  `tramitada` tinyint(4) DEFAULT 0,--campo lógico que indica si la venta está tramitada o no (0=no tramitada, 1=tramitada)
+  `estado` int(11) DEFAULT 0,--campo númérico que recoge el estado de procesamiento de la venta, generalmente el estado si es distinto de 0 indica que hay un problema. EN ESTOS MOMENTOS NO SABEMOS CÓMO SE CODIFICAN LOS DISTINTOS ERRORES
+  `confirmada` smallint(6) DEFAULT 0,--indica si el comercial ha dado el OK a que la venta sea procesada. Valor 1= confirmada, Valor 0= No confirmada. Hay que aclarar, que el comercial solo confirmará la venta cuando ha terminado de confeccionarla.
+  `sig_curso` smallint(6) DEFAULT 1,--indica si el sistema automático de ofrecer un siguiente curso a realizar a los alumnos se ejecuta cuando terminen los alumnos de cursos la matrícula o no. Valor 1=se envía por email ofrecimiento siguiente curso a realizar al alumno. Valor 0=no se le ofrece.
+  `origen` int(11) DEFAULT 0,--indica el origen de la oportunidad de venta a nivel de campaña de márketing. Se relaciona con el campo campanias.id. Realmente este campo se autorellenará por parte del aplicativo obteniendo el valor de la ficha del cliente o del CRM de marketing que generó la venta.
+  `recurrencia` smallint(6) DEFAULT 0,--indica si la venta es recurrente o no. Se dice que la venta es recurrente cuando no es la primera venta realizada al cliente.
+  `crm_origen` int(11) DEFAULT 0,--indica el CRM origen de la venta. Se relaciona con el campo crm.id
+  `es_sesion` smallint(6) DEFAULT 0,--se desconoce el uso de este campo
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5807 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;

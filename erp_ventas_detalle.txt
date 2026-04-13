@@ -1,71 +1,71 @@
-/*Propósito de la tabla: contiene los detalles de una venta.*/
+/*Propósito de la tabla: contiene los detalles de una venta, es decir, qué curso se ha vendido, a cuántos alumnos, fechas, importes, etc.*/
 
 CREATE TABLE `erp_ventas_detalle` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ventaid` int(11) DEFAULT 0,
-  `eo` int(11) DEFAULT 0,
-  `cursoid` int(11) DEFAULT 0,
-  `fecini` int(11) DEFAULT 0,
-  `fecfin` int(11) DEFAULT 0,
-  `grupo` varchar(5) DEFAULT NULL,
-  `tarifa` int(11) DEFAULT 0,
-  `pvp_fijo` decimal(10,2) DEFAULT 0.00,
-  `pvp` decimal(10,2) DEFAULT 0.00,
-  `libro` tinyint(4) DEFAULT 1,
-  `titulo` tinyint(4) DEFAULT 1,
-  `horas_tele` smallint(6) DEFAULT 0,
-  `horas_dist` smallint(6) DEFAULT 0,
-  `horas_pres` smallint(6) DEFAULT 0,
-  `fpago` smallint(6) DEFAULT 0,
-  `nmats` int(11) DEFAULT 0,
-  `copia_aprobAF` tinyint(4) DEFAULT 0,
-  `lugar_imparticion` varchar(255) DEFAULT NULL,
-  `horario` varchar(255) DEFAULT NULL,
-  `tutor` int(11) DEFAULT 0,
-  `tp_factu` int(11) DEFAULT 0,
-  `enviar_email` tinyint(4) DEFAULT 1,
-  `enviar_sms` tinyint(4) DEFAULT 1,
-  `del_cobros` int(11) DEFAULT 0,
-  `del_envios` int(11) DEFAULT 0,
-  `envio_alum_emp` tinyint(4) DEFAULT 2,
-  `pedido_cli` varchar(50) DEFAULT NULL,
-  `auto_factura` tinyint(4) DEFAULT 0,
-  `facturable` tinyint(4) DEFAULT 1,
-  `notas_factu` int(11) DEFAULT 0,
-  `notas_compra` int(11) DEFAULT 0,
-  `notas_tutoria` int(11) DEFAULT 0,
-  `notas_trami` int(11) DEFAULT 0,
-  `notas_almacen` int(11) DEFAULT 0,
-  `notas_eo` int(11) DEFAULT 0,
-  `autorizada` tinyint(4) DEFAULT 0,
-  `autoriza_user` int(11) DEFAULT 0,
-  `autoriza_fecha` int(11) DEFAULT 0,
-  `autorizada_margen` tinyint(4) DEFAULT 0,
-  `autoriza_margen_user` int(11) DEFAULT 0,
-  `autoriza_margen_fecha` int(11) DEFAULT 0,
-  `estado` int(11) DEFAULT 0,
-  `entrada_porcentaje` decimal(10,2) DEFAULT 0.00,
-  `entrada_importe` decimal(10,2) DEFAULT 0.00,
-  `mensualidades` smallint(6) DEFAULT 0,
-  `plazos` smallint(6) DEFAULT 0,
-  `espacio_plazo1` smallint(6) DEFAULT 0,
-  `espacio_entre_plazos` smallint(6) DEFAULT 0,
-  `cobrado` smallint(6) DEFAULT 0,
-  `importe_bonificar` decimal(10,2) DEFAULT 0.00,
-  `tutoria_reactiva` smallint(6) DEFAULT 0,
-  `tutoria_proactiva` smallint(6) DEFAULT 1,
-  `es_itinerario` smallint(6) DEFAULT 0,
-  `es_asignatura` smallint(6) DEFAULT 0,
-  `itinerario` int(11) DEFAULT 0,
-  `orden` smallint(6) DEFAULT 0,
-  `facturar_ini_fin` smallint(6) DEFAULT 0 COMMENT '1=>inicio, 2=>fin',
-  `email_informativo` smallint(6) DEFAULT 1,
-  `marca_logo_campus` int(11) DEFAULT 0,
-  `parte_manual` int(11) DEFAULT 0,
-  `id_af_manual` int(11) DEFAULT 0,
-  `cod_externo` varchar(255) DEFAULT NULL,
-  `envio_email_inscrip_alumnos` int(11) DEFAULT 0,
-  `aprob_af` varchar(255) DEFAULT NULL,
-  `autoriza_edit` smallint(6) DEFAULT 0,
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único que identifica esta línea de detalle de la venta
+  `ventaid` int(11) DEFAULT 0,--contiene el ID de la venta máster a la que se asocia este detalle de venta. Se relaciona con el campo erp_ventas_master.id
+  `eo` int(11) DEFAULT 0,--indica la entidad organizadora por la que se gestiona la o las matrículas. Se relaciona con el campo entidades_organizadoras.id
+  `cursoid` int(11) DEFAULT 0,--indica el id del curso asociado al detalle de la venta. Se relaciona con el campo aux_cursos.cursoid
+  `fecini` int(11) DEFAULT 0,--indica la fecha de inicio de la formación. En formato unix_timestamp. Si está en blanco, cuando se procese la venta, el sistema buscará la fecha más inmediata posible.
+  `fecfin` int(11) DEFAULT 0,--indica la fecha de fin de la formación. En formato unix_timestamp. Si está en blanco, cuando se procese la venta, el sistema buscará la fecha más adecuada en función de la duración en horas de la matrícula
+  `grupo` varchar(5) DEFAULT NULL,--si hay que definir un número de grupo para estas matrículas se indica en este campo. Normalmente en blanco. Cuando se procesa la venta, el valor de este campo acabará en acc_formativas.grupo
+  `tarifa` int(11) DEFAULT 0,--contiene la tarifa de precio a aplicar, se relaciona creo con el campo erp_tarifas_descuentos.id. 
+  `pvp_fijo` decimal(10,2) DEFAULT 0.00,--en caso de que la línea de detalle tenga un precio fijo, indistintamente del número de matrículas vendidas, se indicará aquí ese precio fijo.
+  `pvp` decimal(10,2) DEFAULT 0.00,--contiene el PVP a cobrar por cada matrícula vendida. Salvo si para esta línea de detalle se aplica un pvp fijo, en ese caso, el campo erp_ventas_detalle.pvp_fijo contendrá un valor y el campo erp_ventas_detalle.pvp será 0
+  `libro` tinyint(4) DEFAULT 1,--indica si con cada matrícula se entrega un libro físico o no. Valor 1=se entrega. Valor 0=no se entrega. Campo en desuso
+  `titulo` tinyint(4) DEFAULT 1--indica si con cada matrícula se entrega un diploma físico o no. Valor 1=se entrega. Valor 0=no se entrega. Campo en desuso,
+  `horas_tele` smallint(6) DEFAULT 0,--indica el número de horas elearning que tiene la formación
+  `horas_dist` smallint(6) DEFAULT 0,--indica el número de horas distancia (por correo postal) que tiene la formación. Campo en desuso
+  `horas_pres` smallint(6) DEFAULT 0,--indica el número de horas presenciales o telepresenciales que tiene la formación
+  `fpago` smallint(6) DEFAULT 0,--indica la forma de pago de la formación. Se relaciona con el campo fpago.fpagoid
+  `nmats` int(11) DEFAULT 0,--indica el número de matrículas vendidas en esta línea de detalle
+  `copia_aprobAF` tinyint(4) DEFAULT 0,--indica si se envía una copia de la aprobación de la acción formativa al comercial o no (1=se envía, 0=no se envía)
+  `lugar_imparticion` varchar(255) DEFAULT NULL,--contiene la dirección donde se realizará la formación. Aunque esta información solo se usa para rellenar el parte de apertura de acción formativa. Existe otro sistema para gestionar las aulas que es el que se utiliza operativamente
+  `horario` varchar(255) DEFAULT NULL,--contiene el horario en el que se realizará la formación. Aunque esta información solo se usa para rellenar el parte de apertura de acción formativa. Existe otro sistema para gestionar los horarios que es el que se utiliza operativamente
+  `tutor` int(11) DEFAULT 0,--indica el tutor que se encargará de la formación. Se relaciona con el campo users.userid. Salvo que se quiera un tutor en concreto, generalmente este campo contiene valor 0 y el sistema al procesar la venta, busca el tutor más idóneo.
+  `tp_factu` int(11) DEFAULT 0,--indica si la formación va a ser bonificada o no bonificada. 2=bonificada 3=no bonificada. Existía anteriormente otro valor, el valor 1 que indicaba que esta formación se facturaba directamente a ANCYPEL, pero está en desuso el valor 1
+  `enviar_email` tinyint(4) DEFAULT 1,--indica si para esta formación se envían emails a los alumnos.
+  `enviar_sms` tinyint(4) DEFAULT 1,--indica si para esta formación se envían SMS a los alumnos
+  `del_cobros` int(11) DEFAULT 0,--indica la delegación del cliente que se usa para toda la gestión de cobros. Se relaciona con la tabla delegaciones.id
+  `del_envios` int(11) DEFAULT 0,--indica la delegación del cliente que se usa para toda la gestión de envíos de documentación. Se relaciona con la tabla delegaciones.id. Este campo está en desuso
+  `envio_alum_emp` tinyint(4) DEFAULT 2,--indica si los materiales físicos del curso se envían directamente a la dirección del alumnno o a la dirección de la empresa. Campo en desuso
+  `pedido_cli` varchar(50) DEFAULT NULL,--en caso de que el cliente nos haya informado de que existe un número de pedido interno del cliente, se anota en este campo. Luego esta información se hace figurar en la factura.
+  `auto_factura` tinyint(4) DEFAULT 0,--indica si la acción formativa generada por este venta, se autofactura o no. 
+  `facturable` tinyint(4) DEFAULT 1,--indica si la acción formativa generada por este venta, es facturable o no es facturable.
+  `notas_factu` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con la facturación. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `notas_compra` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con la compra de productos o servicios para ejecutar esta formación. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `notas_tutoria` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con la tutorización. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `notas_trami` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con la tramitación de las matrículas. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `notas_almacen` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con los envíos de materiales. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `notas_eo` int(11) DEFAULT 0,--Contiene las notas aclaratorias relacionadas con la gestión de la bonificación o ejecución de las formación. Las notas están en la tabla erp_textos por lo que se accede a ellas mediante el campo Las notas están en la tabla erp_textos.id
+  `autorizada` tinyint(4) DEFAULT 0,--en caso de que la venta necesite algún tipo de autorización, indica si ya ha sido autorizada (valor 1) o todavía no ha sido autorizada (valor 0)
+  `autoriza_user` int(11) DEFAULT 0,--indica el usuario que ha autorizado la venta. Se relaciona con el campo users.userid
+  `autoriza_fecha` int(11) DEFAULT 0,--indica la fecha en la que ha sido autorizada la venta, en formato unix_timestamp
+  `autorizada_margen` tinyint(4) DEFAULT 0,--Existe un tipo de autorización especial y es por si la venta está por debajo de un margen mínimo. Este campo indica si esta venta está autorizada a procesarse con motivo de un margen por debajo del establecido. 1=si autorizada, 0=no es una venta autorizada por margen
+  `autoriza_margen_user` int(11) DEFAULT 0,--en caso de ser una venta autorizada por poco margen, indica el usuario que la ha autorizado. Se relaciona con el campo users.userid
+  `autoriza_margen_fecha` int(11) DEFAULT 0,--en caso de ser una venta autorizada por poco margen, indica la fecha de autorización en formato unix_timestamp
+  `estado` int(11) DEFAULT 0,--campo númérico que recoge el estado de procesamiento de la venta, generalmente el estado si es distinto de 0 indica que hay un problema. EN ESTOS MOMENTOS NO SABEMOS CÓMO SE CODIFICAN LOS DISTINTOS ERRORES
+  `entrada_porcentaje` decimal(10,2) DEFAULT 0.00,--en caso de que se exija para la venta que el cliente adelante una parte del importe, este campo recoge el porcentaje
+  `entrada_importe` decimal(10,2) DEFAULT 0.00,--en caso de que se exija para la venta que el cliente adelante un importe concreto, este campo recoge el importe que tiene que satisfacer el cliente. 
+  `mensualidades` smallint(6) DEFAULT 0,--indica si el cliente pagará mediante un sistema especial de mensualidades la venta (valor 1) o no usará el sistema especial de mensualidades (valor 0)
+  `plazos` smallint(6) DEFAULT 0,--en caso de que el cliente pague mediante vencimientos, es decir, recibos, la formación, indica el número de plazos es decir, el número de recibos que se generarán
+  `espacio_plazo1` smallint(6) DEFAULT 0,--en caso de que el cliente pague mediante vencimientos, es decir, recibos, la formación, indica el número de días que se esperará para emitir el primer recibo
+  `espacio_entre_plazos` smallint(6) DEFAULT 0,en caso de que el cliente pague mediante vencimientos, es decir, recibos, la formación, indica el número de días a dejar entre recibos
+  `cobrado` smallint(6) DEFAULT 0,--se desconoce su uso
+  `importe_bonificar` decimal(10,2) DEFAULT 0.00,--en caso de que la operación sea bonificada por FUNDAE, este campo recoge el importe total a bonificar. No recoge el importe a bonificar por matrícula sino por el total de matrículas de esta línea.
+  `tutoria_reactiva` smallint(6) DEFAULT 0,--indica si para las matrículas, se usa el sistema de tutorización reactiva, es decir, se responden a las preguntas que hagan los alumnos
+  `tutoria_proactiva` smallint(6) DEFAULT 1,--indica si para las matrículas, se usa el sistema de tutorización proactiva, es decir, se hace un seguimiento de la marcha de los alumnos y se les envían emails en función de esta marcha
+  `es_itinerario` smallint(6) DEFAULT 0,--indica si la línea de detalle es la cabecera de un itinerario de asignaturas
+  `es_asignatura` smallint(6) DEFAULT 0,--indica si la línea de detalle es una matrícula de una asignatura
+  `itinerario` int(11) DEFAULT 0,--en caso de que la línea de detalle sea una asignatura, indica el id de la línea de detalle que contiene la cabecera del itinerario. Se relaciona con el campo erp_ventas_detalle.id
+  `orden` smallint(6) DEFAULT 0,--en caso de que la línea de detalle sea una asignatura, indica el número de orden que ocupa esta matrícula/asignatura en el itinerario.
+  `facturar_ini_fin` smallint(6) DEFAULT 0 COMMENT '1=>inicio, 2=>fin',--indica si la acción formativa generada se factura al inicio de la misma o al fin
+  `email_informativo` smallint(6) DEFAULT 1,--indica si al procesarse la venta, se le envía un email resumen informativo al cliente (Valor 1) o no se le envía (Valor 0)
+  `marca_logo_campus` int(11) DEFAULT 0,--indica el ID de la marca a usar en el campus. Se relaciona con el campo erp_marcas.id
+  `parte_manual` int(11) DEFAULT 0,--en caso de que se haya generado un parte de apertura de acción formativa manualmente, contiene el número de versión del parte de apertura
+  `id_af_manual` int(11) DEFAULT 0,--en caso de que se haya generado un parte de apertura de acción formativa manualmente, contiene el número de acción formativa generada. Se relaciona con el campo acc_formativas.id
+  `cod_externo` varchar(255) DEFAULT NULL,--se desconoce su uso pero puede estar relaciona con el sistema de fichas QR
+  `envio_email_inscrip_alumnos` int(11) DEFAULT 0,--se desconoce su uso pero puede estar relaciona con el sistema de fichas QR
+  `aprob_af` varchar(255) DEFAULT NULL,--creo que contiene al parte de apertura que sube el comercial al declarar la venta
+  `autoriza_edit` smallint(6) DEFAULT 0,--en caso de que se haya creado una acción formativa por anticipado, este campo controla si se autoriza al comercial a modificar la venta o no. Normalmente al generarse la acción formativa por anticipado el sistema ya no deja modificar la venta.
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10183 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
