@@ -5,7 +5,7 @@ CREATE TABLE `matriculas` (
   `matid` int(10) unsigned NOT NULL, -- es el ID usado para identificar inequívocamente a las matrículas, es con el que se relacionan otras tablas con esta
   `userid` int(10) unsigned NOT NULL, -- contiene el ID del alumno, se relaciona con otra base de datos de Moodle (visionyvalor.mdl_user.id)
   `fecini` date NOT NULL, -- fecha de inicio de la matrícula, el dato es redundante porque la fecha de inicio real sería la que viene en la acción formativa.
-  `user` varchar(128) NOT NULL, --nombre del alumno
+  `user` varchar(128) NOT NULL, --nombre del alumno. Es muy importante tener en cuenta, que para obtener el nombre del alumno deberíamos ir a mirar en Moodle, pero como no podemos mezclar en un mismo SELECT dos bases de datos distintas, este campo viene muy bien para obtener el nombre del alumno sin tener que ir a Moodle
   `accfid` int(10) unsigned NOT NULL DEFAULT 0, --es el ID de la acción formativa a la que pertenece la matrícula, se relaciona con acc_formativas.id
   `remid` int(10) unsigned NOT NULL, --contiene el ID de la remesa de matrículas, se relaciona con remesas.remid
   `cursoid` int(10) unsigned NOT NULL DEFAULT 0, -- es redundante porque contiene el ID del curso del que versa la matrícula, aunque realmente el ID del curso está en acc_formativas.cursoid

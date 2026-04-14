@@ -1,0 +1,104 @@
+/*Propósito de la tabla: contiene los datos de tanto de clientes como de potenciales clientes*/
+
+CREATE TABLE `empresas` (
+  `empid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '1#Nro.empedor#width="30%"#nowrap style="text-align: left"# #',  -- id único del registro, identifica al cliente o al potencial cliente
+  `nombre` varchar(74) DEFAULT NULL COMMENT '0#Nombre#width="30%"#nowrap style="text-align: left"# #',  --nombre o razón social del cliente
+  `contacto` varchar(74) DEFAULT NULL, --persona de contacto del cliente
+  `cif` varchar(20) DEFAULT NULL COMMENT '0#N.I.F.#width="30%"#nowrap style="text-align: left"# #', --DNI, NIF o NIE del cliente, puede estar en blanco.
+  `dir` varchar(128) DEFAULT NULL COMMENT '0#Direcci&oacute;n#width="30%"#nowrap style="text-align: left"# #', -- sin uso
+  `cp` varchar(5) DEFAULT NULL COMMENT '0#C&oacute;d.Postal#width="30%"#nowrap style="text-align: left"# #', -- sin uso
+  `pob` varchar(45) DEFAULT NULL COMMENT '0#Poblaci&oacute;n#width="30%"#nowrap style="text-align: left"# #', -- sin uso
+  `provid` int(10) unsigned DEFAULT 0 COMMENT '0#Provincia#width="30%"#nowrap style="text-align: left"# #', -- sin uso
+  `pais` int(11) DEFAULT 73, -- sin uso
+  `tfno1` varchar(20) DEFAULT NULL COMMENT '0#Tel&eacute;fono 1#width="30%"#nowrap style="text-align: left"# #',  --teléfono #1 del cliente
+  `tfno2` varchar(20) DEFAULT NULL COMMENT '0#Tel&eacute;fono 2#width="30%"#nowrap style="text-align: left"# #', --teléfono #2 del cliente
+  `web` varchar(74) DEFAULT NULL,  -- página web del cliente
+  `email` varchar(74) DEFAULT NULL COMMENT '0#E-Mail#width="30%"#nowrap style="text-align: left"# #', -- email principal del cliente.
+  `entidad` varchar(4) DEFAULT NULL, -- sin uso
+  `oficina` varchar(4) DEFAULT NULL,  -- sin uso
+  `dc` varchar(2) DEFAULT NULL, -- sin uso
+  `cta` varchar(10) DEFAULT NULL, -- sin uso
+  `link_convenio` varchar(250) DEFAULT NULL COMMENT ' a',  -- URL del documento en PDF llamado adhesión al contrato de encomienda
+  `etiq_envio` smallint(1) unsigned DEFAULT 0 COMMENT '0', -- sin uso
+  `cnae` varchar(5) DEFAULT NULL, -- código CNAE del cliente
+  `cta_cotiz` varchar(20) DEFAULT NULL, -- sin uso
+  `pl_media` int(10) unsigned DEFAULT 0, -- inicialmente se pretendría guardar aquí la media del número de empleados que tenía en plantilla el cliente, pero en realidad no se usa
+  `repr_legal` smallint(1) unsigned DEFAULT 0, -- indica si el cliente tiene representante legal de los trabajadores o no (1=SI, 0=NO)
+  `pyme` smallint(1) unsigned DEFAULT 0, -- indica si la empresa es PYME o no (1=SI, 0=NO)
+  `new` smallint(1) unsigned DEFAULT 0, --   indica si la empresa es de nueva creación (1=SI, 0=NO) aunque en realidad no se usa
+  `conv_colect` varchar(100) DEFAULT NULL, -- indica el convenio colectivo al que pertenece la empresa cliente, pero no se usa
+  `activa` smallint(1) unsigned DEFAULT 0, -- inidica si la empresa tiene autorizado el uso de nuestro servicio área de clientes o no  (1=Autorizada, 0=No autorizada)
+  `nomuser` varchar(45) DEFAULT NULL, -- contiene el nombre de usuario para acceder a nuestro servicio área de clientes
+  `pass` varchar(45) DEFAULT NULL, -- contiene la password para acceder a nuestro servicio área de clientes
+  `passmd5` varchar(45) DEFAULT NULL, --  contiene la password para acceder a nuestro servicio área de clientes encriptada mediante MD5
+  `emp_fecini` date DEFAULT NULL, -- se desconoce su uso
+  `ult_ent` date DEFAULT NULL,  -- se desconoce su uso
+  `gerente` varchar(128) DEFAULT NULL, --nombre del gerente de la empresa cleinte
+  `gerente_nif` varchar(10) DEFAULT NULL, --nif del gerente de la empresa cliente
+  `resp_forma` varchar(128) DEFAULT NULL, -- nombre del responsable de formación de la empresa cliente
+  `resp_forma_cargo` varchar(45) DEFAULT NULL, --cargo del responsable de formación de la empresa cliente
+  `resp_forma_tfno` varchar(20) DEFAULT NULL, --teléfono del responsable de formación de la empresa cliente
+  `resp_forma_email` varchar(100) DEFAULT NULL, --email del responsable de formación de la empresa cliente
+  `resp_admin` varchar(128) DEFAULT NULL, --nombre del responsable de administración de la empresa cliente
+  `resp_admin_tfno` varchar(20) DEFAULT NULL, --teléfono del responsable de administración de la empresa cliente
+  `resp_admin_email` varchar(100) DEFAULT NULL, --email del responsable de administración de la empresa cliente
+  `fpago` int(10) unsigned DEFAULT 0, --sin uso
+  `acepta_datos` smallint(1) unsigned DEFAULT 0, --se desconoce su uso
+  `datos_actu` smallint(1) unsigned DEFAULT 0, --se desconoce su uso
+  `comid` int(10) unsigned DEFAULT 0, -- indica código ID del usuario del comercial que gestiona a este cliente. Se relaciona con el campo users.userid
+  `crt_ejercicio` varchar(4) DEFAULT NULL, -- se está investigando para qué se usa este campo
+  `crt_tot` decimal(10,2) DEFAULT NULL, -- se está investigando para qué se usa este campo
+  `crt_provi` smallint(5) unsigned DEFAULT NULL, -- se está investigando para qué se usa este campo
+  `crt_consu` decimal(10,2) DEFAULT NULL, -- se está investigando para qué se usa este campo
+  `origen` int(10) unsigned DEFAULT NULL,  -- indica el ID de la campaña de márketing por la que se consiguió al cliente. Se relaciona con el campo campanias.id
+  `robinson` smallint(5) unsigned NOT NULL DEFAULT 0, -- indica si el cliente está inscrito en la lista robinson o no (1=inscrito, 0=no inscrito). En realidad no se usa ya que existe la tabla -robinson- que sustituye a este campo
+  `notas_factu` int(11) DEFAULT 0, -- contiene el ID de las notas referidas a aspectos a tener en cuenta en la facturación. Las notas están en la tabla erp_textos y se relaciona con el campo erp_textos.id
+  `notas` text DEFAULT NULL, -- campo texto que contiene notas generales sobre el cliente
+  `agrupar_facturas` smallint(5) unsigned NOT NULL DEFAULT 0, --en desuso
+  `tipo` smallint(5) unsigned NOT NULL DEFAULT 1, --no se usa
+  `eo_defecto` int(10) unsigned NOT NULL DEFAULT 0, -- no se usa
+  `eo_creditos` int(10) unsigned NOT NULL DEFAULT 0, -- no se usa
+  `comunicar_parte_AF` smallint(5) unsigned NOT NULL DEFAULT 1, --indica si cada vez que participa la empresa cliente en una acción formativa, se le envía al cliente por email el parte de apertura de la acción formativa (1 y 3 = SI, 2 = NO). Es necesario revisar esta información porque no es 100% seguro que sea así
+  `resp_trami` varchar(75) DEFAULT NULL, --cargo del responsable de formación de la empresa cliente
+  `resp_trami_email` varchar(75) DEFAULT NULL, --no se usa
+  `resp_trami_tfno` varchar(20) DEFAULT NULL, --no se usa
+  `convenio` varchar(250) DEFAULT NULL, -- no se usa
+  `tramitador` int(10) unsigned NOT NULL DEFAULT 0, --no se usa
+  `destino_inf_boni` smallint(5) unsigned NOT NULL DEFAULT 0, --no se usa
+  `bloqueoximpago` smallint(6) DEFAULT 0, indica si hemos dejado de atender a la empresa por impago o la seguimos atendiendo (1=bloqueada por impago, 0=operanos con normalidad)
+  `tarifa` int(11) DEFAULT 1, -- indica qué tarifa aplicamos por defecto a la empresa. Se relaciona con el campo erp_cursos_tarifas.id
+  `ult_inf_boni` int(11) DEFAULT 0, --indica en formato unixtime la fecha en la que se ha cargado el último informe de empresa. Esto nos da la idea de lo actualizado que están los créditos disponibles, por ejemplo. Aunque no se tiene 100% claro que este campo sea para esto
+  `diafijo_pago1` int(11) DEFAULT 0, --indica si la empresa tiene días fijos de pago, y en caso de que si, indica el primero día de pago del mes
+  `ult_inf_grupo` int(11) DEFAULT 0, -- indica la fecha en la que se ha cargado el último informe de grupo de la empresa. Aunque no se tiene 100% claro que este campo sea para esto
+  `diafijo_pago2` int(11) DEFAULT 0, --indica si la empresa tiene días fijos de pago, y en caso de que si, indica el segundo día de pago del mes
+  `diafijo_pago3` int(11) DEFAULT 0, --indica si la empresa tiene días fijos de pago, y en caso de que si, indica el tercer día de pago del mes
+  `nivel_fpago` smallint(6) DEFAULT 2, -- existen varios niveles de riesgo en relación a los pagos, y este campo recoge el nivel de riesgo permitito para el cliente. En desuso
+  `mes_nohabil` smallint(6) DEFAULT 0, -- indica si para pagar, el cliente tiene un mes inhábil, es decir, ese mes no paga. Recoge el número del mes.
+  `mensualidades` smallint(6) DEFAULT 0, -- indica si el cliente tiene autorizado pagar mediante mensualidades. Las mensualidades es una forma de pago especial en la que en vez de emitir un giro al cliente, se le permite que nos ingrese él la cuota correspondiente mediante transferencia
+  `plazos` smallint(6) DEFAULT 0, -- indica el número de plazos por defecto que tiene el cliente, cuando nos paga mediante giro bancario
+  `espacio_plazo1` smallint(6) DEFAULT 0, -- en caso de que el cliente nos pague mediante giro bancario, indica el número de días a dejar entre la factura y el primer giro bancario que se le emite al cliente
+  `espacio_entre_plazos` smallint(6) DEFAULT 0, -- en caso de que el cliente nos pague mediante giro bancario, indica el número de días que hay que dejar entre giros
+  `entrada_porcentaje` decimal(10,2) DEFAULT 0.00, -- en caso de que el cliente nos pague mediante giro bancario, indica qué porcentaje de la factura debe pagar inmediátamente el cliente. En desuso
+  `prov_txt` varchar(45) DEFAULT NULL, -- se desconoce su uso aunque parece que está en desuso
+  `anular_seguimiento` int(11) DEFAULT 0, -- se desconoce su uso
+  `dada_de_baja` smallint(6) DEFAULT 0, -- inidica si la empresa está dada de baja o no (1=dada de baja, 0=no dada de baja)
+  `tipo_iva` int(11) DEFAULT 0,
+  `tipo_cli` smallint(6) DEFAULT 0 COMMENT '1=>EMPRESA, 2=>PARTICULAR', -- indica el tipo de cliente, se relaciona con el campo erp_empresas_tipos.id
+  `ult_www_pagina_vista` smallint(6) DEFAULT 0,  -- se desconoce su uso
+  `reclamar_facturas` smallint(6) DEFAULT 1, -- indica si se anula el servicio de reclamación automático de facturas o no. Se graba el año desde el que se deja de aplicar el servicio de seguimiento de facturas no pagadas
+  `bonif_exige_aprobar` smallint(6) DEFAULT 0,  -- indica si para este cliente, se exige que sus alumnos aprueben los cursos para poder clasificar como bonificable por FUNDAE la matrícula de un alumno. (1=Si se exige, 0=no se exige)
+  `bonif_minimo_realizado` decimal(10,2) DEFAULT 75.00, --indica qué porcentaje del curso tiene que tener hecho un alumno que pertenece a esta empresa para poder clasificar como bonificable por FUNDAE la matrícula
+  `pef_75` smallint(6) DEFAULT 1, -- indica si para los alumnos que pertenecen a esta empresa, el hecho de haber realizado la prueba de evaluación final, da igual el resultado de la misma, otorga el alumno haber realizado el 75% del curso.
+  `xml_finalizaciones` smallint(6) DEFAULT 1, --se desconoce su uso
+  `costes_directos` decimal(10,2) DEFAULT 0.00,  --se desconoce su uso
+  `costes_indirectos` decimal(10,2) DEFAULT 0.00, --se desconoce su uso
+  `costes_salariales` decimal(10,2) DEFAULT 0.00, --se desconoce su uso
+  `no_envio_email_creditos` smallint(6) DEFAULT 0, --indica si para este cliente, debemos evitar enviarle información de los créditos disponibles que tiene (1=No se envían emails de créditos, 0=si se envían emails de créditos)
+  `justificacion_iva0` text DEFAULT NULL, -- contiene un texto que explica por qué al cliente hay que facturarble con IVA=0%
+  `ver_tiempos_inf_segui` smallint(6) DEFAULT 0, -- indica si este cliente, cuando usa el área de clientes y solicita ver un informe de seguimiento, si ve los tiempos reales empleados por los alumno o no. (1=Si ve los tiempos realies, 0=no ve los tiempos reales)
+  `marca_logo_campus` int(11) DEFAULT 0, -- indica el ID de la marca por defecto a usar en el campus para los alumnos del cliente. Se relaciona con el campo erp_marcas.id
+  `url_panel_control` varchar(255) DEFAULT NULL, -- contiene la URL que nos dirige a cargar un panel de control personalizado para el cliente
+  `id_clasif` smallint(6) DEFAULT 0, -- contiene el ID de una clasificacióno del cliente en función de su actividad comercial. Se relaciona con el campo erp_empresas_clasificacion.id
+  `automatricular` smallint(6) DEFAULT NULL, -- indica si el cliente está autorizado a automatricular a sus alumnos usando nuestro servicio área de clientes. (1=autorizado, 0=no autorizado)
+  PRIMARY KEY (`empid`)
+) ENGINE=InnoDB AUTO_INCREMENT=25466 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
