@@ -1,0 +1,19 @@
+/*Propósito de la tabla: Contener información de los créditos para formación disponibles que da FUNDAE a los clientes*/
+
+CREATE TABLE `creditos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,--id único del registro
+  `empid` int(10) unsigned NOT NULL,--id de la empresa de la que se informa de los créditos, se relaciona con el campo empresas.empid
+  `ejercicio` varchar(4) NOT NULL,--indica el año al que hace referencia el registro
+  `total` decimal(10,2) NOT NULL DEFAULT 0.00,--indica el total de crédito en euros que se ha otorgado al cliente por parte de FUNDAE, incluye la posible reserva de créditos de años anteiores, campos creditos.importe_reserva_1anio y importe_reserva_2anio
+  `consumido` decimal(10,2) NOT NULL DEFAULT 0.00,--indica cuánto crédito ha consumido ya el cliente
+  `provi` smallint(5) unsigned NOT NULL,--indica si los créditos son provisionales (valor 1) o definitivos (valor 0)
+  `gastado_vyv` decimal(10,2) NOT NULL DEFAULT 0.00,--indica la cantidad de créditos que ha gastado el cliente comprando formación a nuestra empresa. No hay que unirlo a creditos.consumido, es un dato para conocer el detalle
+  `ult_reclamacion_ctos` int(11) DEFAULT 0,--indica la fecha en la que se solicitó que se actualizaran los créditos por última vez. La fecha está en formato unix_timestamp
+  `reserva_credito` varchar(20) DEFAULT NULL,--indica si el cliente tiene activada la -reserva de crédito- en FUNDAE. Valor SI=tiene activada la reserva. Valor 0, valor NO, en blanco o null, indica que no tiene activada la reserva
+  `importe_reserva_1anio` decimal(10,2) DEFAULT 0.00,--detalle del crédito reservado del ejercicio anterior. Es informativo, operativamente no tiene valor
+  `importe_reserva_2anio` decimal(10,2) DEFAULT 0.00,--detalle del crédito reservado de hace 2 ejercicios. Es informativo, operativamente no tiene valor
+  `ult_actu` int(11) DEFAULT 0,--indica en qué fecha se ha actualizado la información del registro, en formato unix_timestamp
+  PRIMARY KEY (`id`),
+  KEY `i_empid` (`empid`),
+  KEY `I_ejercicio` (`ejercicio`)
+) ENGINE=InnoDB AUTO_INCREMENT=18844 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
