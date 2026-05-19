@@ -1,0 +1,18 @@
+/*Propósito de la tabla: servir como bandeja de salida del sistema de correos electrónicos del aplicativo */
+
+CREATE TABLE `erp_emails_cola` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único del email enviado
+  `prio` smallint(6) DEFAULT 0,--indica la prioridad para el envío, siendo 0=inmediato, -1=quedar retenido y de 1 a 9 la urgencia, siendo 1 la más alta y 9 la más baja
+  `from` varchar(255) DEFAULT NULL,--correo electrónico que aparecerá como remitente del email
+  `to` varchar(255) DEFAULT NULL,--correo electrónico destinatario del email
+  `concepto` varchar(255) DEFAULT NULL,--contiene al campo -asunto- del correo electrónico
+  `hist` smallint(6) DEFAULT 1,--Valor 1 indica si se envía una copia a historico@visionyvalor.es y si es 0 no se envía copia a historico@visionyvalor.es
+  `bcc` text DEFAULT NULL,--tiene que ver con el sistema de enviar a más de un destinatario el correo (típico campo de email CC) pero no está claro su uso, habrá que aclararlo más adelante
+  `files` text DEFAULT NULL,-- contiene los archivos adjuntos a enviarse con el correo en formato PHP Serialized
+  `html` mediumtext DEFAULT NULL, -- contiene el cuerpo del correo en formato HTML
+  `prog` int(11) DEFAULT 0,-- se desconoce su uso
+  `servidor` int(11) DEFAULT 1, --indica el servidor desde el que se enviará el correo, se relaciona con el campo erp_emails_servidores.id
+  `ppal` int(11) DEFAULT 0,-- se desconoce su uso
+  `repe` int(11) DEFAULT 0,-- se desconoce su uso
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1702203 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
