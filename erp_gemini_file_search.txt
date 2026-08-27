@@ -1,0 +1,12 @@
+/*Propósito de la tabla: contiene un registro por cada store creado en el Gemini File Search*/
+
+CREATE TABLE `erp_gemini_file_search` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, -- id único del store
+  `cursoid` int(11) DEFAULT NULL,--id del curso al que pertenece el store. Se relaciona con el campo aux_cursos.cursoid
+  `store_name` varchar(100) NOT NULL,--nombre del store, generalmente será el valor "curso_vyv_" + el id del curso.
+  `gemini_store_id` varchar(255) NOT NULL,--valor interno del Gemini File Search
+  `description` text DEFAULT NULL,--nombre del store, generalmente será "Almacén para curso"+ el id del curso
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),--fecha en la que se ha creado el store en formato aaaa-mm-dd hh:mm:ss
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `store_name` (`store_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

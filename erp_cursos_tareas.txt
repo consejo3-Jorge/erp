@@ -1,0 +1,20 @@
+/*Propósito de la tabla: contiene la tareas propuestas en los cursos a los alumnos*/
+
+CREATE TABLE `erp_cursos_tareas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único de la tarea
+  `cursoid` int(11) NOT NULL,--indica a qué curso pertenece la tarea, se relaciona con el campo aux_cursos.cursoid
+  `sectionid` int(11) DEFAULT NULL,--indica la sección dentro del campus en la que está la tarea
+  `cmid` int(11) DEFAULT NULL,--no sé qué hace
+  `asigid` int(11) NOT NULL DEFAULT 0,--contiene el ID de la tarea (assign) dentro de Moodle
+  `nombre_tarea` varchar(255) DEFAULT NULL,--Nombre de la tarea
+  `texto_pregunta` text DEFAULT NULL,--Enunciado de la tarea para el alumno 
+  `temas_cubiertos` text DEFAULT NULL,--conteniene los id's de los temas del curso que abarca la tarea, separados por coma (,) pero no sé esos ID's con qué campo se relacionan
+  `estado` varchar(50) DEFAULT NULL,-- indica si la tarea está activa (valor=activo) o si la tarea no está activa (valor=XXXXXXX)
+  `monitorizar` tinyint(1) DEFAULT 1,--indica si cuando la IA corrige automáticamente la tarea del alumno, la respuesta se monitoriza por un humano, es decir, va a la tabla erp_cursos_tareas_respuestas (valor 1) o si no va a ninguna tabla y por lo tanto no se monitoriza (valor 0)
+  PRIMARY KEY (`id`),
+  KEY `cursoid` (`cursoid`),
+  KEY `cmid` (`cmid`),
+  KEY `assignmentid` (`asigid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+

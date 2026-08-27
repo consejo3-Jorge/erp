@@ -1,0 +1,17 @@
+/*Propósito de la tabla: contiene un registro por cada fichero de contenidos didácticos que se ha subido a Gemini File Search*/
+
+
+CREATE TABLE `erp_gemini_ficheros` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único del registro
+  `storeid` int(11) DEFAULT NULL, --indica el ID del Store de Gemini File Search en el que está el fichero. Se relaciona con el campo erp_gemini_file_search.id
+  `scormid` int(11) DEFAULT 0, -- id del SCORM en Moodle relacionado con el fichero de contenidos didácticos
+  `sectionid` int(11) DEFAULT NULL, --creo que es la sección dentro del curso en el que está el SCORM del que se han extraído los contenidos para crear el fichero de contenidos didácticos
+  `cmid` int(11) DEFAULT NULL,--pendiente de aclarar qué hace este campo
+  `cursoid` int(11) NOT NULL,--id del curso con el que está relacionado el fichero, se relaciona con el campo aux_cursos.cursoid
+  `file_name` varchar(255) NOT NULL,--nombre del fichero de contenidos
+  `gemini_file_id` varchar(255) NOT NULL,-campo interno del Gemini File Search
+  `content_hash` varchar(64) DEFAULT NULL,-campo interno del Gemini File Search
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),--fecha en la que se ha creado el registro en Gemini File Searh en formato aaaa-mm-dd hh:mm:ss
+  PRIMARY KEY (`id`),
+  KEY `cursoid` (`cursoid`)
+) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

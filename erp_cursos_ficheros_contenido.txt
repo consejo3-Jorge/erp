@@ -1,0 +1,26 @@
+/*Propósito de la tabla: contiene un registro por cada fichero de contenidos didácticos asociados a un curso*/
+
+CREATE TABLE `erp_cursos_ficheros_contenido` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,--id único del registro
+  `cursoid` int(11) NOT NULL,--id del curso al que pertenece el fichero, se relaciona con el campo aux_cursos.id
+  `nombre` varchar(255) NOT NULL,--nombre del fichero
+  `descrip` text DEFAULT NULL,--descripción del fichero
+  `tipo` varchar(50) DEFAULT NULL,-- puede tomar dos valores: "scorm"-> indica que el fichero se ha extraído de un SCORM. "resource"->Indica que el fichero se ha subido como recurso adicional al curso
+  `autman` tinyint(1) DEFAULT 0 COMMENT '0: manual, 1: automatico',-- indica si el fichero se ha logrado de forma automática (valor 1) o manual (valor 0)
+  `ruta` varchar(512) DEFAULT NULL,--indica la ruta física del fichero en nuestro servidor, la raiz de la ruta es: "/usr/home/visionyvalor/www/recursos/admin/documentos/cursos/files_contenido/" + el id del curso + el nombre del fichero
+  `extension` varchar(10) DEFAULT NULL,--indica la extensión del fichero, generalmente .pdf
+  `hash` varchar(64) DEFAULT NULL,--valor hash del fichero, no sé si es el hash del fichero en el sistema de archivos de Moodle
+  `moodle_id` int(11) DEFAULT NULL,--desconozco el uso, ahora es null en todos los registros
+  `datos_ia` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`datos_ia`)),--no estoy seguro, pero es otro hash
+  `fecha_creacion` datetime DEFAULT current_timestamp(),--fecha de creación del registro en formato aaaa-mm-dd hh:mm:ss
+  `fecha_modificacion` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),--fecha de la última modificación del registro en formato aaaa-mm-dd hh:mm:ss
+  `scormid` int(11) DEFAULT 0,--no tengo muy claro el uso, pero puede ser el ID del SCORM en Moodle, no sé con qué campo de Moodle se relaciona
+  `sectionid` int(11) DEFAULT 0,--parece el ID de la sección del curso en la que está asociado este fichero de contenidos didácticos
+  `cmid` int(11) DEFAULT 0,--no sé para qué se usa este campo.
+  PRIMARY KEY (`id`),
+  KEY `id_curso` (`cursoid`),
+  KEY `tipo` (`tipo`),
+  KEY `hash` (`hash`)
+) ENGINE=InnoDB AUTO_INCREMENT=343 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
